@@ -1,8 +1,16 @@
+google.charts.load('upcoming', {'packages': ['geomap']});
+google.charts.setOnLoadCallback(drawMap);
+
 function validateForm() {
     var email = document.forms["address_form"]["email"].value;
     var phone = document.forms["address_form"]["phone"].value;
     var address = document.forms["address_form"]["address"].value;
-    return validateEmail(email) && validateAddress(address) && validatePhone(phone);
+    if (validateEmail(email) && validateAddress(address) && validatePhone(phone)){
+        // Store
+        localStorage.setItem("address", address);
+        return true;
+    }
+    return false;
 }
 
 
@@ -74,3 +82,26 @@ function validatePhone(phone){
         return phone.length == 10;
     }
 }
+
+function getFromLocalStorage(key){
+    return localStorage.getItem(key);
+}
+
+function drawMap() {
+    var address = getFromLocalStorage("address");
+    var addressArray = address.split(",");
+    var data = google.visualization.arrayToDataTable([
+        ["street_address"],
+        [address]
+    ]);
+
+    var options = {};
+    options['region'] = 'US';
+    options['colors'] = [0xFF8747, 0xFFB581, 0xc06000]; //orange colors
+    options['dataMode'] = 'markers';
+    options['showLegend'] = false;
+
+    var container = document.getElementById("map_canvas");
+    var geomap = new google.visualization.GeoMap(container);
+    geomap.draw(data, options);
+};
