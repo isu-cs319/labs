@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="./validation2.js"></script>
     <style>
-        #success_message {
+        .verify-box{
             display: none;
         }
     </style>
@@ -19,7 +19,7 @@
     <form class="form-horizontal" action="map.html" method="post" id="address_form" onsubmit="return validateForm()">
         <fieldset>
             <legend>Exercise 2.2</legend>
-            <!-- Text input-->
+            <!-- Email-->
             <div class="form-group">
                 <label class="col-md-4 control-label">E-Mail</label>
                 <div class="col-md-4">
@@ -28,8 +28,9 @@
                         <input name="email" placeholder="xxx@xxx.xxx" class="form-control" type="text" required>
                     </div>
                 </div>
+                <div class="col-md-1 verify-box"><img id="email-verify-box" src="../wrong.png"/></div>
             </div>
-            <!-- Text input-->
+            <!-- Phone-->
             <div class="form-group">
                 <label class="col-md-4 control-label">Phone #</label>
                 <div class="col-md-4">
@@ -38,9 +39,9 @@
                         <input name="phone" placeholder="xxx-xxx-xxxx" class="form-control" type="text">
                     </div>
                 </div>
+                <div class="col-md-1 verify-box"><img src="../wrong.png" id="phone-verify-box"/></div>
             </div>
-
-            <!-- Text input-->
+            <!-- Address-->
             <div class="form-group">
                 <label class="col-md-4 control-label">Address</label>
                 <div class="col-md-4">
@@ -49,22 +50,16 @@
                         <input name="address" placeholder="City, State" class="form-control" type="text" required>
                     </div>
                 </div>
-            </div>
-
-            <!-- Success message -->
-            <div class="alert alert-success" role="alert" id="success_message">Success <i
-                    class="glyphicon glyphicon-thumbs-up"></i>
+                <div class="col-md-1 verify-box"><img src="../wrong.png" id="address-verify-box"/></div>
             </div>
 
             <!-- Button -->
             <div class="form-group">
                 <label class="col-md-5 control-label"></label>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-primary">Send <span class="glyphicon glyphicon-send"></span>
+                    <button type="submit" class="btn btn-primary">Submit <span class="glyphicon glyphicon-send"></span>
                     </button>
                 </div>
-                <div class="col-md-1"><img src="../correct.png"></div>
-                <div class="col-md-1"><img src="../wrong.png"></div>
             </div>
 
         </fieldset>
