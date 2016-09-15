@@ -45,5 +45,32 @@ function validateAddress(address){
 
 
 function validatePhone(phone){
-    return true;
+    if (phone == ""){
+        return true;
+    }
+    var numbers = phone.split("-",3);
+    if (numbers.length == 0 && isNaN(phone)){
+        alert("Please enter correct Phone");
+        document.forms["address_form"]["phone"].focus();
+        return false;
+    }
+    var sum_len = 0;
+    for (var i=0; i< numbers.length; i++ ){
+        if (isNaN(numbers[i])){
+            alert("Please enter correct Phone");
+            document.forms["address_form"]["phone"].focus();
+            return false;
+        }
+        sum_len += numbers[i].length;
+    }
+    if (sum_len == 10){
+        return true;
+    }
+    else{
+        if (phone.length != 10){
+            alert("Please enter correct Phone");
+            document.forms["address_form"]["phone"].focus();
+        }
+        return phone.length == 10;
+    }
 }
