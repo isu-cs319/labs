@@ -5,6 +5,10 @@
     <title>Google Maps</title>
     <script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>
     <script src="./validation2.js"></script>
+    <script type="text/javascript">
+        google.charts.load('upcoming', {'packages': ['geomap']});
+        google.charts.setOnLoadCallback(drawMap);
+    </script>
 </head>
 <body>
     <div id='map_canvas'></div>

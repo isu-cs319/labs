@@ -1,6 +1,3 @@
-google.charts.load('upcoming', {'packages': ['geomap']});
-google.charts.setOnLoadCallback(drawMap);
-
 function validateForm() {
     var email = document.forms["address_form"]["email"].value;
     var phone = document.forms["address_form"]["phone"].value;
@@ -105,10 +102,9 @@ function verificationFailed(field){
 function getFromLocalStorage(key){
     return localStorage.getItem(key);
 }
-
 function drawMap() {
     var address = getFromLocalStorage("address");
-    var addressArray = address.split(",");
+    var addressArray = address.split(",");  // not needed?
     var data = google.visualization.arrayToDataTable([
         ["street_address"],
         [address]

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HTML Canvas Example</title>
+</head>
+<body>
+<div class="btn-group">
+    <button id="btn-start" onclick="toggle()">Start</button>
+    <button onclick="turnLeft()">Left</button>
+    <button onclick="turnRight()">Right</button>
+</div>
+<canvas id="myCanvas" width="1000" height="500" style="border:1px solid #000000;"></canvas>
+<script type="text/javascript">
+    window.requestAnimFrame = (function(callback) {
+        return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
+                function(callback) {
+                    window.setTimeout(callback, 1000 / 60);
+                };
+    })();
+    var canvas = document.getElementById("myCanvas");
+    var ctx = canvas.getContext("2d");
+    var x = 0;
+    var y = 75;
+    var direction = true; // false = Left, true = Right
+    var compass = "E"; // East, South, West, North
+
+    // Begin moving, initialize line
+    ctx.beginPath();
+    ctx.lineWidth="5";
+    ctx.strokeStyle="red";
+    ctx.moveTo(x,y);
+    ctx.stroke(); // Draw it
+
+    var startTime = (new Date()).getTime();
+    animate(canvas, ctx, startTime);
+
+    function animate(canvas, context, startTime) {
+        // update
+        var time = (new Date()).getTime() - startTime;
+
+        var linearSpeed = 100;
+        if (direction) {
+            // Move right, according to compass
+            // pixels / second
+            x = linearSpeed * time / 1000;
+        }
+        else {
+            //Move left
+        }
+        context.lineTo(x, y);
+        context.stroke();
+        // request new frame
+        requestAnimFrame(function() {
+            animate(canvas, context, startTime);
+        });
+    }
+
+    function toggle(){
+        var current = document.getElementById("btn-start").innerHTML;
+        // Stop updating / start updating
+        if (current == "Stop"){
+            document.getElementById("btn-start").innerHTML = "Start";
+        }
+        else{
+            document.getElementById("btn-start").innerHTML = "Stop";
+        }
+    }
+
+    function turnLeft(){
+        direction = false;
+    }
+    function turnRight(){
+        direction = true;
+    }
+</script>
+</body>
+</html>
