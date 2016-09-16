@@ -23,11 +23,12 @@
     var x = 0;
     var y = 75;
     var direction = true; // false = Left, true = Right
-    var compass = "E"; // East, South, West, North
-
+    var compass = "N"; // East, South, West, North
+    var linearSpeed = 0;  //Change this to affect speed
     // Begin moving, initialize line
     ctx.beginPath();
     ctx.lineWidth="5";
+    ctx.lineJoin = "round";
     ctx.strokeStyle="red";
     ctx.moveTo(x,y);
     ctx.stroke(); // Draw it
@@ -36,20 +37,43 @@
     animate(canvas, ctx, startTime);
 
     function animate(canvas, context, startTime) {
-        // update
         var time = (new Date()).getTime() - startTime;
-
-        var linearSpeed = 100;
+        ctx.moveTo(x,y);
         if (direction) {
-            // Move right, according to compass
-            // pixels / second
-            x = linearSpeed * time / 1000;
+            switch (compass){
+                case "E":
+                    y += linearSpeed;// Down
+                    break;
+                case "W":
+                    y -=  linearSpeed;  // Up
+                    break;
+                case "N":
+                    x += linearSpeed;  // Right
+                    break;
+                case "S":
+                    x -= linearSpeed;  //Left
+                    break;
+            }
         }
         else {
-            //Move left
+            // Always opposite to "right"
+            switch (compass){
+                case "E":
+                    y -= linearSpeed;
+                    break;
+                case "W":
+                    y +=  linearSpeed;
+                    break;
+                case "N":
+                    x -= linearSpeed;
+                    break;
+                case "S":
+                    x += linearSpeed;
+                    break;
+            }
         }
-        context.lineTo(x, y);
-        context.stroke();
+        ctx.lineTo(x, y);
+        ctx.stroke();
         // request new frame
         requestAnimFrame(function() {
             animate(canvas, context, startTime);
@@ -59,18 +83,48 @@
     function toggle(){
         var current = document.getElementById("btn-start").innerHTML;
         // Stop updating / start updating
-        if (current == "Stop"){
-            document.getElementById("btn-start").innerHTML = "Start";
+        if (current == "Start"){
+            document.getElementById("btn-start").innerHTML = "Stop";
+            linearSpeed = 1;
         }
         else{
-            document.getElementById("btn-start").innerHTML = "Stop";
+            linearSpeed = 0;
+            document.getElementById("btn-start").innerHTML = "Start";
         }
     }
 
     function turnLeft(){
+        switch (compass){
+            case "E":
+                compass = "N";
+                break;
+            case "W":
+                compass = "S";
+                break;
+            case "N":
+                compass = "W";
+                break;
+            case "S":
+                compass = "E";
+                break;
+        }
         direction = false;
     }
     function turnRight(){
+        switch (compass){
+            case "E":
+                compass = "S";
+                break;
+            case "W":
+                compass = "N";
+                break;
+            case "N":
+                compass = "E";
+                break;
+            case "S":
+                compass = "W";
+                break;
+        }
         direction = true;
     }
 </script>
