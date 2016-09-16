@@ -8,6 +8,9 @@ function validateForm() {
     var validEmail = validateEmail(email);
     var validAddress = validateAddress(address);
     var validPhone = validatePhone(phone);
+
+    document.cookie = "state=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+    
     if (validEmail && validAddress && validPhone){
         // Make images visible
          makeVisible("verify-box","inline-block");
@@ -15,6 +18,7 @@ function validateForm() {
         localStorage.setItem("address", address);
         return true;
     }
+    
     // Make images visible
     makeVisible("verify-box","inline-block");
     return false; //http://stackoverflow.com/questions/9686538/align-labels-in-form-next-to-input
