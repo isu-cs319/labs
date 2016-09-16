@@ -15,7 +15,7 @@
     window.requestAnimFrame = (function(callback) {
         return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame ||
                 function(callback) {
-                    window.setTimeout(callback, 1000 / 60);
+                    window.setTimeout(callback, 1000 );
                 };
     })();
     var canvas = document.getElementById("myCanvas");
@@ -25,6 +25,7 @@
     var direction = true; // false = Left, true = Right
     var compass = "N"; // East, South, West, North
     var linearSpeed = 0;  //Change this to affect speed
+    var changedDirection = false;
     // Begin moving, initialize line
     ctx.beginPath();
     ctx.lineWidth="5";
@@ -33,12 +34,19 @@
     ctx.moveTo(x,y);
     ctx.stroke(); // Draw it
 
-    var startTime = (new Date()).getTime();
-    animate(canvas, ctx, startTime);
+    animate(canvas, ctx);
 
-    function animate(canvas, context, startTime) {
-        var time = (new Date()).getTime() - startTime;
+    function animate(canvas, context) {
         ctx.moveTo(x,y);
+        if (changedDirection){
+           if (direction){
+               direction = false;
+           }
+           else{
+               direction = true;
+           }
+            changedDirection = false;
+        }
         if (direction) {
             switch (compass){
                 case "E":
@@ -76,7 +84,7 @@
         ctx.stroke();
         // request new frame
         requestAnimFrame(function() {
-            animate(canvas, context, startTime);
+            animate(canvas, context);
         });
     }
 
@@ -108,6 +116,9 @@
                 compass = "E";
                 break;
         }
+        if (direction){
+            changedDirection = true;
+        }
         direction = false;
     }
     function turnRight(){
@@ -124,6 +135,9 @@
             case "S":
                 compass = "W";
                 break;
+        }
+        if (!direction){
+            changedDirection = true;
         }
         direction = true;
     }
