@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Validation Form</title>
+  <script src="./validation1.js"></script>
+  <style>
+    
+  </style>
+</head>
+
+<body>
+  <form id="form1" method="post" action="validation2.html" onsubmit="return validateForm()">
+    <fieldset>
+      <legend> Excercise 2.1 </legend> <br>
+
+      <label>First name:</label>
+      <input type="text" placeholder="First Name" id="firstname" required>
+      <img id="firstname-correct" src="../correct.png" style="display: none">
+      <img id="firstname-wrong" src="../wrong.png" style="display: none">
+       <br><br>
+       
+       <label>Last name:</label>
+       <input type="text" placeholder="Last Name" id="lastname" required>
+       <img id="lastname-correct" src="../correct.png" style="display: none">
+       <img id="lastname-wrong" src="../wrong.png" style="display: none">
+       <br><br>
+       
+       <label>Gender:</label>
+       <select id="gender" required>
+	 <option value=""> Please Select </option>
+	 <option value="male"> Male </option>
+	 <option value="female"> Female </option>
+       </select>
+       <img id="gender-correct" src="../correct.png" style="display: none">
+       <img id="gender-wrong" src="../wrong.png" style="display: none">
+       <br><br>
+       
+       <label>State:</label>
+       <select id="state" required>
+	 <option value=""> Please Select </option>
+	 <option value="california"> California </option>
+	 <option value="florida"> Florida </option>
+	 <option value="newyork"> New York </option>
+	 <option value="texas"> Texas </option>
+	 <option value="hawaii"> Hawaii </option>
+	 <option value="washingotn"> Washington </option>
+	 <option value="colorado"> Colorado </option>
+	 <option value="virginia"> Virginia </option>
+	 <option value="iowa"> Iowa </option>
+	 <option value="arizona"> Arizona </option>
+       </select>
+       <img id="state-correct" src="../correct.png" style="display: none">
+       <img id="state-wrong" src="../wrong.png" style="display: none">
+       <br><br><br>
+       
+       <input type="submit" value="Continue">
+
+    </fieldset>
+  </form>
+
+</body>
+</html>
