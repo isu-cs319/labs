@@ -1,0 +1,131 @@
+<html>
+<head>
+<!--
+  THE PURPOSE OF THIS EXAMPLE IS TO SHOW HOW ==  and == work
+  ALSO, EVERY CONDITION IN IF STATEMENT ALWAYS EVALUATES TO TRUE OR FALSE!
+
+  == allows changes type if it can when doing the check
+  === is STRICT equality check (checks type also)
+
+-->
+</head>
+
+<body>
+<script> 
+
+  var x; 
+
+  if (x == undefined) {
+    document.write("x is undefined <br>");
+  }
+
+  // == allows conversion between types. Here 5 is converted to String
+  if ("5" == 5) {
+    document.write("\"5\" is ==  5<br>");
+  }
+
+  // ===  and !== do not allow conversion between types
+  if ("5" !== 5) {
+    document.write("\"5\" is not === as 5<br>");
+  }
+
+  // CONDITION IN IF STATEMENT EVALUATES TO FALSE HERE.
+  if ("") {
+    document.write("true? <br>");
+  }
+  else {
+    document.write("false? <br>");
+  }
+
+  // objects
+  if ({a: "hello"} == {a:"hello"}) {
+    document.write("the two objects are same using ==");
+  }
+  else {
+    document.write("the two objects are NOT same using ==");
+  }
+  document.write("<br>");
+
+  if ({a: "hello"} === {a:"hello"}) {
+    document.write("the two objects are same using ===");
+  }
+  else {
+    document.write("the two objects are NOT same using ===");
+  }
+  document.write("<br>");
+
+  if (function a() {} == function b() {}) {
+    document.write("the two functions are same using ==");
+  }
+  else {
+    document.write("the two functions are NOT same using ==");
+  }
+  document.write("<br>");
+  if (function a() {} === function b() {}) {
+    document.write("the two functions are same using ===");
+  }
+  else {
+    document.write("the two functions are NOT same using ===");
+  }
+  document.write("<br>");
+
+  if ([10,20,30] == [10,20,30]) {
+    document.write("the two arrays are same using ==");
+  }
+  else {
+    document.write("the two arrays are NOT same using ==");
+  }
+  document.write("<br>");
+  if ([10,20,30] === [10,20,30]) {
+    document.write("the two arrays are same using ===");
+  }
+  else {
+    document.write("the two arrays are NOT same using ===");
+  }
+  document.write("<br>");
+
+
+  // TODO: Play with evaluating different types and values in if
+  // statement conditions: For example:
+  // x = {"Tom":"Thumb"}, x = [10,20,30], x = function(){}, etc
+
+  var ar1 = [5,8,4];
+  var ar2 = [5,8,4];
+  if (ar1 == ar2) {
+    document.write("ar1 == ar2");
+  }
+  else {
+    document.write("ar1 != ar2");
+  }
+  document.write("<br>");
+
+  
+  if ({b: "emily"} == {b: "emily"}) {
+    document.write("{b: emily} == {b: emily}");
+  }
+  else {
+    document.write("{b: emily} != {b: emily}");
+  }
+  document.write("<br>");
+
+  var a = [6,5,4];
+  var b = 5;
+  if (a[1] == b) {
+    document.write("a[1] == b");
+  }
+  else {
+    document.write("a[1] != b");
+  }
+  document.write("<br>");
+
+  if (a[1] === b) {
+    document.write("a[1] === b");
+  }
+  else {
+    document.write("a[1] !== b");
+  }
+  document.write("<br>");
+
+</script>
+</body>
+</html>
