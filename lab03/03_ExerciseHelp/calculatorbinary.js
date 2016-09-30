@@ -88,11 +88,85 @@ display : function() {
 },
 
 attachHandlers : function() {
-  BinCalc.View.button1.onclick = "BinCalc.button1Handler()"; 
+    BinCalc.View.button1.onclick = "BinCalc.button1Handler()";
+    BinCalc.View.button0.onclick = "BinCalc.button0Handler()";
+    BinCalc.View.buttonAdd.onclick = "BinCalc.buttonAddHandler()";
+    BinCalc.View.buttonSubtract.onclick = "BinCalc.buttonSubHandler()";
+    BinCalc.View.buttonMultiply.onclick = "BinCalc.buttonMulHandler()";
+    BinCalc.View.buttonDivide.onclick = "BinCalc.buttonDivHandler()";
+    BinCalc.View.buttonEquals.onclick = "BinCalc.buttonEqHandler()";
+    BinCalc.View.buttonDecimal.onclick = "BinCalc.buttonDecHandler()";
+    BinCalc.View.buttonClear.onclick = "BinCalc.buttonClearHandler()";
+    BinCalc.View.buttonMemR.onclick = "BinCalc.buttonMemRHandler()";
+    BinCalc.View.buttonMemSub.onclick = "BinCalc.buttonMemSubHandler()";
+    BinCalc.View.buttonMemAdd.onclick = "BinCalc.buttonMemAddHandler()";
+    BinCalc.View.buttonMemClear.onclick = "BinCalc.buttonMemClearHandler()";
+    BinCalc.View.buttonNot.onclick = "BinCalc.buttonNotHandler()";
+    BinCalc.View.buttonMod.onclick = "BinCalc.buttonModHandler()";
+    BinCalc.View.buttonLeft.onclick = "BinCalc.buttonLeftHandler()";
+    BinCalc.View.buttonRight.onclick = "BinCalc.buttonRightHandler()";
+    BinCalc.View.buttonAnd.onclick = "BinCalc.buttonAndHandler()";
+    BinCalc.View.buttonOr.onclick = "BinCalc.buttonOrHandler()";
 },
 
-button1Handler : function() {
-  alert("Hi");
-}
+button0Handler : function() {
+    alert("0");
+},
 
+
+button1Handler : function() {
+  alert("1");
+},
+
+buttonAddHandler : function() {
+    alert("+");
+},
+    buttonSubHandler : function() {
+        alert("-");
+    },
+    buttonMulHandler : function() {
+        alert("*");
+    },
+    buttonDivHandler : function() {
+        alert("/");
+    },
+    buttonEqHandler : function() {
+        alert("=");
+    },
+    buttonDecHandler : function() {
+        alert(".");
+    },
+    buttonClearHandler : function() {
+        alert("Clear");
+    },
+    buttonMemRHandler : function() {
+        alert("MR");
+    },
+    buttonMemSubHandler : function() {
+        alert("M-");
+    },
+    buttonMemAddHandler : function() {
+        alert("M+");
+    },
+    buttonMemClearHandler : function() {
+        alert("MC");
+    },
+    buttonNotHandler : function() {
+        alert("~");
+    },
+    buttonModHandler : function() {
+        alert("%");
+    },
+    buttonLeftHandler : function() {
+        alert("<<");
+    },
+    buttonRightHandler : function() {
+        alert(">>");
+    },
+    buttonAndHandler : function() {
+        alert("&");
+    },
+    buttonOrHandler : function() {
+        alert("|");
+    }
 } // end of BinCalc;

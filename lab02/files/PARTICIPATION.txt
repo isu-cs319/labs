@@ -1,0 +1,7 @@
+Exercise 1 - Both
+Exercise 2.1 - Emily Anderson.
+    Files: validation1.html, validation1.js
+Exercise 2.2 - David Schott
+    Files: validation2.html, validation2.js, map.html
+Exercise 3 - Both
+    Files: canvas.html
