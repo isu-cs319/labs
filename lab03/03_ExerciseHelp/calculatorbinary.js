@@ -25,13 +25,12 @@ View : {
     buttonMemSub : {id: "buttonMemSub", type: "button", value: "M-", onclick:""},
     buttonMemAdd : {id: "buttonMemAdd", type: "button", value: "M+", onclick:""},
     buttonMemClear : {id: "buttonMemClear", type: "button", value: "MC", onclick:""},
-    /* rename */
-    buttonTilde : {id: "buttonTilde", type: "button", value: "~", onclick:""},
+    buttonNot : {id: "buttonNot", type: "button", value: "~", onclick:""},
     buttonMod : {id: "buttonMod", type: "button", value: "%", onclick:""},
-    buttonLess : {id: "buttonLess", type: "button", value: "<<", onclick:""},
-    buttonGreater : {id: "buttonGreater", type: "button", value: ">>", onclick:""},
-    buttonAmpersand : {id: "buttonAmpersand", type: "button", value: "&", onclick:""},
-    buttonPipe : {id: "buttonPipe", type: "button", value: "|", onclick:""},
+    buttonLeft : {id: "buttonLeft", type: "button", value: "<<", onclick:""},
+    buttonRight : {id: "buttonRight", type: "button", value: ">>", onclick:""},
+    buttonAnd : {id: "buttonAnd", type: "button", value: "&", onclick:""},
+    buttonOr : {id: "buttonOr", type: "button", value: "|", onclick:""},
 },
 
 Controller : {
@@ -63,17 +62,17 @@ display : function() {
     s += "<tr><td>";
     s += BinCalc.displayElement(BinCalc.View.button1);
     s += BinCalc.displayElement(BinCalc.View.button0);
-    s += BinCalc.displayElement(BinCalc.View.buttonTilde);
+    s += BinCalc.displayElement(BinCalc.View.buttonNot);
     s += "<tr><td>";
     s += BinCalc.displayElement(BinCalc.View.buttonAdd);
     s += BinCalc.displayElement(BinCalc.View.buttonMod);
-    s += BinCalc.displayElement(BinCalc.View.buttonLess);
+    s += BinCalc.displayElement(BinCalc.View.buttonLeft);
     s += "<tr><td>";
-    s += BinCalc.displayElement(BinCalc.View.buttonGreater);
+    s += BinCalc.displayElement(BinCalc.View.buttonRight);
     s += BinCalc.displayElement(BinCalc.View.buttonSubtract);
-    s += BinCalc.displayElement(BinCalc.View.buttonAmpersand);
+    s += BinCalc.displayElement(BinCalc.View.buttonAnd);
     s += "<tr><td>";
-    s += BinCalc.displayElement(BinCalc.View.buttonPipe);
+    s += BinCalc.displayElement(BinCalc.View.buttonOr);
     s += BinCalc.displayElement(BinCalc.View.buttonMultiply);
     s += BinCalc.displayElement(BinCalc.View.buttonDivide);
     s += "<tr><td>";
