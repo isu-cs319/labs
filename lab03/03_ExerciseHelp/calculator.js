@@ -32,13 +32,13 @@ var Calc = {
 	buttonSubtract : {id: "buttonSubtract", type: "button", value: "-", onclick:""},
 	buttonMultiply : {id: "buttonMultiply", type: "button", value: "*", onclick:""},
 	buttonDivide : {id: "buttonDivide", type: "button", value: "/", onclick:""},
-	buttonEquals : {id: "buttonEquals", type: "button", value: "=", onclick:"Calc.buttonEqualsHandler()"},
-	buttonDecimal : {id: "buttonDecimal", type: "button", value: ".", onclick:"Calc.buttonDecimalHandler()"},
-	buttonClear : {id: "buttonClear", type: "button", value: "C", onclick:"Calc.buttonClearHandler()"},
-	buttonMemR : {id: "buttonMemR", type: "button", value: "MR", onclick:"Calc.buttonMemRHandler()"},
-	buttonMemSub : {id: "buttonMemSub", type: "button", value: "M-", onclick:"Calc.buttonMemSubHandler()"},
-	buttonMemAdd : {id: "buttonMemAdd", type: "button", value: "M+", onclick:"Calc.buttonMemAddHandler()"},
-	buttonMemClear : {id: "buttonMemClear", type: "button", value: "MC", onclick:"Calc.buttonMemClearHandler()"}
+	buttonEquals : {id: "buttonEquals", type: "button", value: "=", onclick:""},
+	buttonDecimal : {id: "buttonDecimal", type: "button", value: ".", onclick:""},
+	buttonClear : {id: "buttonClear", type: "button", value: "C", onclick:""},
+	buttonMemR : {id: "buttonMemR", type: "button", value: "MR", onclick:""},
+	buttonMemSub : {id: "buttonMemSub", type: "button", value: "M-", onclick:""},
+	buttonMemAdd : {id: "buttonMemAdd", type: "button", value: "M+", onclick:""},
+	buttonMemClear : {id: "buttonMemClear", type: "button", value: "MC", onclick:""}
     },
 
     
@@ -117,6 +117,13 @@ var Calc = {
 	Calc.View.buttonSubtract.onclick = "Calc.buttonSubtractHandler()";
 	Calc.View.buttonMultiply.onclick = "Calc.buttonMultiplyHandler()";
 	Calc.View.buttonDivide.onclick = "Calc.buttonDivideHandler()";
+	Calc.View.buttonEquals.onclick = "Calc.buttonEqualsHandler()";
+	Calc.View.buttonDecimal.onclick = "Calc.buttonDecimalHandler()";
+	Calc.View.buttonClear.onclick = "Calc.buttonClearHandler()";
+	Calc.View.buttonMemR.onclick = "Calc.buttonMemRHandler()";
+	Calc.View.buttonMemSub.onclick = "Calc.buttonMemSubHandler()";
+	Calc.View.buttonMemAdd.onclick = "Calc.buttonMemAddHandler()";
+	Calc.View.buttonMemClear.onclick = "Calc.buttonMemClearHandler()";
     },
 
     button0Handler : function() {
