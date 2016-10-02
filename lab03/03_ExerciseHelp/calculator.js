@@ -347,4 +347,4 @@ var Calc = {
     }
 
 
-} // end of Calc;
+} // end of BinCalc;

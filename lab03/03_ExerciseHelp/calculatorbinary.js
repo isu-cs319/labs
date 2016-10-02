@@ -118,134 +118,201 @@ attachHandlers : function() {
 },
 
     button0Handler : function() {
-        if (Calc.startNew == true) {
+        if (BinCalc.startNew == true) {
             document.getElementById("textRowBin").value = "0";
-            Calc.startNew = false;
+            BinCalc.startNew = false;
         }
         else {
             document.getElementById("textRowBin").value += "0";
         }
-        Calc.equalsAgain = false;
+        BinCalc.equalsAgain = false;
     },
 
     button1Handler : function() {
-        if (Calc.startNew == true) {
+        if (BinCalc.startNew == true) {
             document.getElementById("textRowBin").value = "1";
-            Calc.startNew = false;
+            BinCalc.startNew = false;
         }
         else {
             document.getElementById("textRowBin").value += "1";
         }
-        Calc.equalsAgain = false;
+        BinCalc.equalsAgain = false;
     },
 
     buttonAddHandler : function() {
-        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
-        Calc.operator = "+";
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "+";
         document.getElementById("textRowBin").value = "+";
-        Calc.startNew = true;
-        Calc.equalsAgain = false;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonSubHandler : function() {
-        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
-        Calc.operator = "-";
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "-";
         document.getElementById("textRowBin").value = "-";
-        Calc.startNew = true;
-        Calc.equalsAgain = false;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonMulHandler : function() {
-        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
-        Calc.operator = "*";
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "*";
         document.getElementById("textRowBin").value = "*";
-        Calc.startNew = true;
-        Calc.equalsAgain = false;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonDivHandler : function() {
-        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
-        Calc.operator = "/";
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "/";
         document.getElementById("textRowBin").value = "/";
-        Calc.startNew = true;
-        Calc.equalsAgain = false;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonEqHandler : function() {
         var result;
-        if (Calc.equalsAgain == false) {
-            Calc.operand2 = parseInt(document.getElementById("textRowBin").value,2);
+        if (BinCalc.equalsAgain == false) {
+            BinCalc.operand2 = parseInt(document.getElementById("textRowBin").value,2);
         }
-        if (Calc.equalsAgain == true) {
-            if (Calc.operator == "+") {
-                result = parseInt(document.getElementById("textRowBin").value, 2) + Calc.operand2;
+        if (BinCalc.equalsAgain == true) {
+            if (BinCalc.operator == "+") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) + BinCalc.operand2;
                 document.getElementById("textRowBin").value = result.toString(2);
             }
-            else if (Calc.operator == "-") {
-                result = parseInt(document.getElementById("textRowBin").value, 2) - Calc.operand2;
+            else if (BinCalc.operator == "-") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) - BinCalc.operand2;
                 document.getElementById("textRowBin").value = result.toString(2);
             }
-            else if (Calc.operator == "*") {
-                result = parseInt(document.getElementById("textRowBin").value, 2) * Calc.operand2;
+            else if (BinCalc.operator == "*") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) * BinCalc.operand2;
                 document.getElementById("textRowBin").value = result.toString(2);
             }
-            else if (Calc.operator == "/") {
-                result = parseInt(document.getElementById("textRowBin").value, 2) / Calc.operand2;
+            else if (BinCalc.operator == "/") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) / BinCalc.operand2;
                 document.getElementById("textRowBin").value = result.toString(2);
             }
-            else { // divide
-                document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) / Calc.operand2;
+            else if (BinCalc.operator == "~") {
+                result = ~ parseInt(document.getElementById("textRowBin").value, 2);
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (BinCalc.operator == "&") {
+                result =  parseInt(document.getElementById("textRowBin").value, 2) & BinCalc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (BinCalc.operator == "|") {
+                result =  parseInt(document.getElementById("textRowBin").value, 2) | BinCalc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (BinCalc.operator == "<<") {
+                result =  parseInt(document.getElementById("textRowBin").value, 2) << 1;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (BinCalc.operator == ">>") {
+                result =  parseInt(document.getElementById("textRowBin").value, 2) >> 1;
+                document.getElementById("textRowBin").value = result.toString(2);
             }
         }
-        else if (Calc.operator == "+") {
-            result = Calc.operand1 + Calc.operand2;
+        else if (BinCalc.operator == "+") {
+            result = BinCalc.operand1 + BinCalc.operand2;
             document.getElementById("textRowBin").value = result.toString(2);
         }
-        else if (Calc.operator == "-") {
-            result = Calc.operand1 - Calc.operand2;
+        else if (BinCalc.operator == "-") {
+            result = BinCalc.operand1 - BinCalc.operand2;
             document.getElementById("textRowBin").value = result.toString(2);
         }
-        else if (Calc.operator == "*") {
-            result = Calc.operand1 * Calc.operand2;
+        else if (BinCalc.operator == "*") {
+            result = BinCalc.operand1 * BinCalc.operand2;
             document.getElementById("textRowBin").value = result.toString(2);
         }
-        else if (Calc.operator == "/") {
-            result = Calc.operand1 / Calc.operand2;
+        else if (BinCalc.operator == "/") {
+            result = BinCalc.operand1 / BinCalc.operand2;
             document.getElementById("textRowBin").value = result.toString(2);
         }
-        else { // divide
-            document.getElementById("textRow").value = Calc.operand1 / Calc.operand2;
+        else if (BinCalc.operator == "~") {
+            result = ~ BinCalc.operand1;
+            document.getElementById("textRowBin").value = result.toString(2);
         }
-        Calc.startNew = true;
-        Calc.equalsAgain = true;
+        else if (BinCalc.operator == "&") {
+            result =  BinCalc.operand1 & BinCalc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (BinCalc.operator == "|") {
+            result =  BinCalc.operand1 | BinCalc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (BinCalc.operator == "<<") {
+            result =  BinCalc.operand1 << 1;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (BinCalc.operator == ">>") {
+            result =  BinCalc.operand1 >> 1;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = true;
     },
     buttonClearHandler : function() {
-        alert("Clear");
+        document.getElementById("textRowBin").value = "";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonMemRHandler : function() {
-        alert("MR");
+        document.getElementById("textRowBin").value = BinCalc.memVal;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonMemSubHandler : function() {
-        alert("M-");
+        BinCalc.memVal = BinCalc.memVal - parseInt(document.getElementById("textRowBin").value, 2);
+        document.getElementById("textRow").value = BinCalc.memVal.toString(2);
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonMemAddHandler : function() {
-        alert("M+");
+        BinCalc.memVal = BinCalc.memVal + parseInt(document.getElementById("textRowBin").value, 2);
+        document.getElementById("textRow").value = BinCalc.memVal.toString(2);
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonMemClearHandler : function() {
-        alert("MC");
+        BinCalc.memVal = 0;
+        document.getElementById("textRowBin").value = BinCalc.memVal;
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonNotHandler : function() {
-        alert("~");
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "~";
+        document.getElementById("textRowBin").value = "~";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonModHandler : function() {
         alert("%");
     },
     buttonLeftHandler : function() {
-        alert("<<");
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "<<";
+        document.getElementById("textRowBin").value = "<<";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonRightHandler : function() {
-        alert(">>");
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = ">>";
+        document.getElementById("textRowBin").value = ">>";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonAndHandler : function() {
-        alert("&");
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "&";
+        document.getElementById("textRowBin").value = "&";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     },
     buttonOrHandler : function() {
-        alert("|");
+        BinCalc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        BinCalc.operator = "|";
+        document.getElementById("textRowBin").value = "|";
+        BinCalc.startNew = true;
+        BinCalc.equalsAgain = false;
     }
 } // end of BinCalc;
