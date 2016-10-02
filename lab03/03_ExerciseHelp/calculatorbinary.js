@@ -7,11 +7,17 @@
 var BinCalc = {
 
 Model : {
+    memVal : undefined,
+    operand1 : undefined,
+    operand2 : undefined,
+    operator : undefined,
+    startNew : undefined,
+    equalsAgain : undefined
 },
 
 
 View : {
-    textRow : {id: "textRow", type: "text", value: "", onclick:""},
+    textRow : {id: "textRowBin", type: "text", value: "", onclick:""},
     button0 : {id: "button0", type: "button", value: 0, onclick:""},
     button1 : {id: "button1", type: "button", value: 1, onclick:""},
     buttonAdd  : {id: "buttonAdd", type: "button", value: "+", onclick:""},
@@ -38,6 +44,9 @@ Controller : {
 },
 
 run : function() {
+BinCalc.memVal = 0;
+BinCalc.startNew = true;
+BinCalc.equalsAgain = false;
   BinCalc.attachHandlers();
   console.log(BinCalc.display());
   return BinCalc.display();
@@ -95,7 +104,6 @@ attachHandlers : function() {
     BinCalc.View.buttonMultiply.onclick = "BinCalc.buttonMulHandler()";
     BinCalc.View.buttonDivide.onclick = "BinCalc.buttonDivHandler()";
     BinCalc.View.buttonEquals.onclick = "BinCalc.buttonEqHandler()";
-    BinCalc.View.buttonDecimal.onclick = "BinCalc.buttonDecHandler()";
     BinCalc.View.buttonClear.onclick = "BinCalc.buttonClearHandler()";
     BinCalc.View.buttonMemR.onclick = "BinCalc.buttonMemRHandler()";
     BinCalc.View.buttonMemSub.onclick = "BinCalc.buttonMemSubHandler()";
@@ -109,32 +117,103 @@ attachHandlers : function() {
     BinCalc.View.buttonOr.onclick = "BinCalc.buttonOrHandler()";
 },
 
-button0Handler : function() {
-    alert("0");
-},
+    button0Handler : function() {
+        if (Calc.startNew == true) {
+            document.getElementById("textRowBin").value = "0";
+            Calc.startNew = false;
+        }
+        else {
+            document.getElementById("textRowBin").value += "0";
+        }
+        Calc.equalsAgain = false;
+    },
 
+    button1Handler : function() {
+        if (Calc.startNew == true) {
+            document.getElementById("textRowBin").value = "1";
+            Calc.startNew = false;
+        }
+        else {
+            document.getElementById("textRowBin").value += "1";
+        }
+        Calc.equalsAgain = false;
+    },
 
-button1Handler : function() {
-  alert("1");
-},
-
-buttonAddHandler : function() {
-    alert("+");
-},
+    buttonAddHandler : function() {
+        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        Calc.operator = "+";
+        document.getElementById("textRowBin").value = "+";
+        Calc.startNew = true;
+        Calc.equalsAgain = false;
+    },
     buttonSubHandler : function() {
-        alert("-");
+        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        Calc.operator = "-";
+        document.getElementById("textRowBin").value = "-";
+        Calc.startNew = true;
+        Calc.equalsAgain = false;
     },
     buttonMulHandler : function() {
-        alert("*");
+        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        Calc.operator = "*";
+        document.getElementById("textRowBin").value = "*";
+        Calc.startNew = true;
+        Calc.equalsAgain = false;
     },
     buttonDivHandler : function() {
-        alert("/");
+        Calc.operand1 = parseInt(document.getElementById("textRowBin").value,2);
+        Calc.operator = "/";
+        document.getElementById("textRowBin").value = "/";
+        Calc.startNew = true;
+        Calc.equalsAgain = false;
     },
     buttonEqHandler : function() {
-        alert("=");
-    },
-    buttonDecHandler : function() {
-        alert(".");
+        var result;
+        if (Calc.equalsAgain == false) {
+            Calc.operand2 = parseInt(document.getElementById("textRowBin").value,2);
+        }
+        if (Calc.equalsAgain == true) {
+            if (Calc.operator == "+") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) + Calc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (Calc.operator == "-") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) - Calc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (Calc.operator == "*") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) * Calc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else if (Calc.operator == "/") {
+                result = parseInt(document.getElementById("textRowBin").value, 2) / Calc.operand2;
+                document.getElementById("textRowBin").value = result.toString(2);
+            }
+            else { // divide
+                document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) / Calc.operand2;
+            }
+        }
+        else if (Calc.operator == "+") {
+            result = Calc.operand1 + Calc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (Calc.operator == "-") {
+            result = Calc.operand1 - Calc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (Calc.operator == "*") {
+            result = Calc.operand1 * Calc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else if (Calc.operator == "/") {
+            result = Calc.operand1 / Calc.operand2;
+            document.getElementById("textRowBin").value = result.toString(2);
+        }
+        else { // divide
+            document.getElementById("textRow").value = Calc.operand1 / Calc.operand2;
+        }
+        Calc.startNew = true;
+        Calc.equalsAgain = true;
     },
     buttonClearHandler : function() {
         alert("Clear");
