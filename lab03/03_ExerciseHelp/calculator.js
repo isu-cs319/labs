@@ -318,16 +318,16 @@ var Calc = {
 	}
 	if (Calc.equalsAgain == true) {
 	    if (Calc.operator == "+") {
-		document.getElementById("textRow").value = parseInt(document.getElementById("textRow").value) + Calc.operand2;
+		document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) + Calc.operand2;
 	    }
 	    else if (Calc.operator == "-") {
-		document.getElementById("textRow").value = parseInt(document.getElementById("textRow").value) - Calc.operand2;
+		document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) - Calc.operand2;
 	    }
 	    else if (Calc.operator == "*") {
-		document.getElementById("textRow").value = parseInt(document.getElementById("textRow").value) * Calc.operand2;
+		document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) * Calc.operand2;
 	    }
 	    else { // divide
-		document.getElementById("textRow").value = parseInt(document.getElementById("textRow").value) / Calc.operand2;
+		document.getElementById("textRow").value = parseFloat(document.getElementById("textRow").value) / Calc.operand2;
 	    }
 	}
 	else if (Calc.operator == "+") {
