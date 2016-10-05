@@ -1,0 +1,7 @@
+Exercise 1: Warm up
+	- Both
+Exercise 2: Simple Calculator
+  Decimal Calculator
+	- Emily Anderson
+  Binary Calculator
+	- David Schott
