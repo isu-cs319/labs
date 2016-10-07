@@ -60,7 +60,9 @@ $(document).ready(function()
      // TODO: 3. using jquery when we hover over p with id p3,
      // make it very large (i.e. change its font size)
      // use w3schools.com to find out how to change the font size
-
+     $(document.getElementById("p3")).hover(function(){
+         $(this).css("font-size", "50px")
+    });
 
 
   }); // end of ready
