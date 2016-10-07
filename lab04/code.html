@@ -1,0 +1,67 @@
+<html>
+  <head>
+     <style>
+#panel, #flip {
+padding: 5px;
+text-align: center;
+background-color: #e5eecc;
+border: solid 1px #c3c3c3;
+}
+
+#panel {
+padding: 50px;
+display: none;
+}
+     </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="code.js"></script>
+  </head>
+  <body>
+    <!-- 5 style elements being changed
+	 1. on button click, p1 background color changes to yellow
+	 2. on button click, p2 font size changes to 30 px
+	 3. on hover over p3, p3 color changes to red
+	 4. on hover over p3, p2 left margin increased to 20 px
+	 5. on p1 double click, p1 gets dotted border
+      -->
+    
+    <p id="p1"> P1 </p>
+    <p id="p2"> P2 </p>
+    <p id="p3"> P3 </p>
+    <button id="button1"> Click me </button>
+    <br><br><br>
+
+    <!-- 5 effects on elements
+	 1. on panel double click, panel slides down
+	 2. on "fade squares in" button, three squares fade in at different speeds
+	 3. on "switch" button, blue square moves down and green square moves up
+	 4. after blue and green sqaures move, callback function is executed
+	 5. on mouse leave pink square, sqaure's width increaes by 160px
+      -->
+
+    <div id="flip"> Double click here </div>
+    <div id="panel"> Hello </div>
+    <br>
+    <button id="button2"> fade squares in </button> <br>
+    <button id="button3"> switch </button>
+    <div id="div1" style="width:80px;height:80px;display:none;background-color:blue;position:absolute;"> </div>
+    <br><br><br><br><br><br>
+    <div id="div2" style="width:80px;height:80px;display:none;background-color:green;position:absolute;"> </div>
+    <br><br><br><br><br>
+    <div id="div3" style="width:80px;height:80px;display:none;background-color:pink;position:absolute;"> </div>
+    <br><br><br><br><br>
+    Enter your name: <br>
+    <input type="text" id="name"> </input>
+    <br><br>
+
+    <!-- 5 different events used throughout
+	 1. click
+	 2. hover
+	 3. double click
+	 4. mouseleave
+	 5. focus/blur
+      -->
+    
+  </body>
+
+</html>
