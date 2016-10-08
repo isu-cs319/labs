@@ -33,3 +33,48 @@ function Library(books) {
         }
     });
 }
+
+
+var titles =   [
+"exotic",
+"dispensable",
+"ossified",
+"cold",
+"seashore",
+"needle",
+"language",
+"polish",
+"sable",
+"steel",
+"thaw",
+"object",
+"bewildered",
+"pine",
+"quarrelsome",
+"careful",
+"eye",
+"reduce",
+"territory",
+"knot",
+"fly",
+"unadvised",
+"whistle",
+"man",
+"expansion",
+"itch"];
+
+var i;
+var title;
+var books = [];
+for (i=0; i<25; i++){
+    title = titles[Math.floor(Math.random()*titles.length)];
+    if (i < 5){
+        books.push(new Book(i,title,true));
+    }
+    else{
+        books.push(new Book(i,title,false));
+    }
+    console.log(books[i]);
+}
+var lib = new Library(books);
+console.log(lib);
