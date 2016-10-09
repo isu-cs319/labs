@@ -95,26 +95,31 @@ function displayLibrary(lib){
     populateShelf(lib.sport,3);
 }
 
-function populateShelf(shelf, columnIndex){
-    var tbody = document.getElementById("library");
-    var tbook;
+function prepareTable(){
+    // Take care of <tr>s
+    var tbody = document.getElementById("library").tBodies[0];
     var numRows = tbody.rows.length;
     var trow;
     var tcell;
     // Take care of <tr>s
     var i = 0;
+    alert(maxShelfSize + " == "+numRows);
     if (maxShelfSize != numRows){
-    for (i=0; i< maxShelfSize; i++){
-        trow = tbody.insertRow(i);
-        tcell = trow.insertCell(columnIndex);
-        tcell.innerHTML = shelf.books.bookName; // Make this more elaborate
+        for (i=0; i< maxShelfSize; i++){
+            trow = tbody.insertRow(i);
         }
     }
-    else{
-    for(i=0; i <numRows; i++){
+}
+
+function populateShelf(shelf, columnIndex){
+    prepareTable();
+    var tbody = document.getElementById("library").tBodies[0];
+    var trow;
+    var tcell;
+    var i;
+    for(i=0; i <shelf.books.length; i++){
         trow = tbody.rows[i];
         tcell = trow.insertCell(columnIndex);
-        tcell.innerHTML = shelf.books.bookName; // Make this more elaborate
-    }
+        tcell.innerHTML = shelf.books[i].bookName; // Make this more elaborate
     }
 }
