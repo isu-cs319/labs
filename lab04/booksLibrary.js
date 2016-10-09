@@ -31,10 +31,17 @@ var titles =   [
     "itch"];
 
 var maxShelfSize;
-// If no lib exists,
-var lib = constructLibrary();
-displayLibrary(lib);
+// Load stuff from storage / init library
+var lib = JSON.parse(localStorage.getItem("library"));
+if (lib == undefined){
+    lib = constructLibrary();
+}
+var user = JSON.parse(localStorage.getItem("user"));
+console.log(user);
+console.log(lib);
 
+// Display library
+displayLibrary(lib);
 
 function Book(id, name, reference) {
     this.bookID = id;
@@ -84,7 +91,6 @@ for (i=0; i<25; i++){
     else{
         books.push(new Book(i,title,false));
     }
-    console.log(books[i]);
 }
 return new Library(books);
 }
@@ -159,9 +165,22 @@ return -1;
 
 function borrowBook(id){
     var book = findBook(id);
-    var studentID = "U13";  // TODO: get from local storage
-    if (book.borrowedBy == ""){
+    var studentID = user.name;
+    if (book.presence == 1){
+        // Check if user exceeds limit of 2 borrowed books
+        if (user.borrowed1 != "" && user.borrowed2 != ""){
+            alert("LIMIT REACHED. User already borrowed " + findBook(user.borrowed1).bookName + " and " + findBook(user.borrowed2).bookName);
+            return;
+        }
+        else if (user.borrowed1 == ""){
+            user.borrowed1 = book.bookID;
+        }
+        else if (user.borrowed2 == ""){
+            user.borrowed2 = book.bookID;
+        }
+        // Finally, borrow book
         book.borrowedBy = studentID;
+        book.presence = 0;
     }
     else{
         alert("Book " + book.bookName + " already borrowed by " + studentID);
@@ -172,21 +191,34 @@ function borrowBook(id){
     document.getElementById(id).onclick = function (){return returnBook(id);};
     alert("Book " + book.bookName + " successfully borrowed by " + studentID);
 
-    // TODO: save all to local storage
+    //save all to local storage
+    localStorage.setItem("library",JSON.stringify(lib));
+    localStorage.setItem("user",JSON.stringify(user));
 }
 function returnBook(id){
     var book = findBook(id);
-    var studentID = "U13";  // TODO: get from local storage
+    var studentID = user.name;
     // Same as person that borrowed book?
     if (book.borrowedBy == studentID){
+        // Return book
         book.borrowedBy = "";
+        book.presence = 1;
         document.getElementById(id).onclick = function (){return borrowBook(id);};
         document.getElementById(id).style.backgroundColor = "white";
         alert("Book " + book.bookName + " successfully returned by " + studentID);
+        // Release from user-side:
+        if (user.borrowed1 == id){
+            user.borrowed1 = "";
+        }
+        else{
+            user.borrowed2 = "";
+        }
     }
     else{
         alert("Book " + book.bookName + " already borrowed by " + studentID);
         return;  // no changes
     }
     // TODO: save updates to local storage
+    localStorage.setItem("library",JSON.stringify(lib));
+    localStorage.setItem("user",JSON.stringify(user));
 }

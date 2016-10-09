@@ -9,7 +9,13 @@ function validateLogin() {
 	alert("Error. Please re-enter login credentials.");
 	return false;
     }
-    
+    var user = {
+        name: username,
+        password: password,
+        borrowed1:"",
+        borrowed2:""
+    };
+    localStorage.setItem("user",JSON.stringify(user));
 }
 
 function validateAdmin(username, password) {
