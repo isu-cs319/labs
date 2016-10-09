@@ -31,6 +31,7 @@ var titles =   [
     "itch"];
 
 var maxShelfSize;
+// If no lib exists,
 var lib = constructLibrary();
 displayLibrary(lib);
 
@@ -102,7 +103,6 @@ function prepareTable(){
     var trow;
     // Take care of <tr>s
     var i = 0;
-    alert(maxShelfSize + " == "+numRows);
     if (maxShelfSize != numRows){
         for (i=0; i< maxShelfSize; i++){
             trow = tbody.insertRow(i);
@@ -118,8 +118,75 @@ function populateShelf(shelf){
     var i;
     for(i=0; i < shelf.books.length; i++){
         trow = tbody.rows[i];
-        //alert(trow + "Col index: " + columnIndex);
-        tcell = trow.insertCell(-1);
-        tcell.innerHTML = shelf.books[i].bookName; // Make this more elaborate
+        tcell = trow.insertCell(-1); // -1 = append to the end
+        if (shelf.books[i].borrowedBy != ""){
+            tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+        }
+        else{
+        tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+        }
     }
+}
+
+function findBook(id){
+    var i;
+    if (id % 4 == 0){
+        for(i=0; i < lib.art.books.length; i++){
+            if (lib.art.books[i].bookID == id)
+                return lib.art.books[i];
+        }
+    }
+    else if (id % 4 == 1){
+        for(i=0; i < lib.science.books.length; i++){
+            if (lib.science.books[i].bookID == id)
+                return lib.science.books[i];
+        }
+    }
+    else if (id % 4 == 2){
+        for(i=0; i < lib.sport.books.length; i++){
+            if (lib.sport.books[i].bookID == id)
+                return lib.sport.books[i];
+        }
+    }
+    else{
+        for(i=0; i < lib.literature.books.length; i++){
+            if (lib.literature.books[i].bookID == id)
+                return lib.literature.books[i];
+        }
+    }
+return -1;
+}
+
+function borrowBook(id){
+    var book = findBook(id);
+    var studentID = "U13";  // TODO: get from local storage
+    if (book.borrowedBy == ""){
+        book.borrowedBy = studentID;
+    }
+    else{
+        alert("Book " + book.bookName + " already borrowed by " + studentID);
+        return;  // no changes
+    }
+    // Update Element to borrowed:
+    document.getElementById(id).style.backgroundColor = "red";
+    document.getElementById(id).onclick = function (){return returnBook(id);};
+    alert("Book " + book.bookName + " successfully borrowed by " + studentID);
+
+    // TODO: save all to local storage
+}
+function returnBook(id){
+    var book = findBook(id);
+    var studentID = "U13";  // TODO: get from local storage
+    // Same as person that borrowed book?
+    if (book.borrowedBy == studentID){
+        book.borrowedBy = "";
+        document.getElementById(id).onclick = function (){return borrowBook(id);};
+        document.getElementById(id).style.backgroundColor = "white";
+        alert("Book " + book.bookName + " successfully returned by " + studentID);
+    }
+    else{
+        alert("Book " + book.bookName + " already borrowed by " + studentID);
+        return;  // no changes
+    }
+    // TODO: save updates to local storage
 }
