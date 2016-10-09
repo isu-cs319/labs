@@ -89,10 +89,10 @@ return new Library(books);
 }
 
 function displayLibrary(lib){
-    populateShelf(lib.literature,0);
-    populateShelf(lib.art,1);
-    populateShelf(lib.science,2);
-    populateShelf(lib.sport,3);
+    populateShelf(lib.literature);
+    populateShelf(lib.art);
+    populateShelf(lib.science);
+    populateShelf(lib.sport);
 }
 
 function prepareTable(){
@@ -100,7 +100,6 @@ function prepareTable(){
     var tbody = document.getElementById("library").tBodies[0];
     var numRows = tbody.rows.length;
     var trow;
-    var tcell;
     // Take care of <tr>s
     var i = 0;
     alert(maxShelfSize + " == "+numRows);
@@ -111,15 +110,16 @@ function prepareTable(){
     }
 }
 
-function populateShelf(shelf, columnIndex){
+function populateShelf(shelf){
     prepareTable();
     var tbody = document.getElementById("library").tBodies[0];
     var trow;
     var tcell;
     var i;
-    for(i=0; i <shelf.books.length; i++){
+    for(i=0; i < shelf.books.length; i++){
         trow = tbody.rows[i];
-        tcell = trow.insertCell(columnIndex);
+        //alert(trow + "Col index: " + columnIndex);
+        tcell = trow.insertCell(-1);
         tcell.innerHTML = shelf.books[i].bookName; // Make this more elaborate
     }
 }
