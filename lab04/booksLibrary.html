@@ -12,10 +12,10 @@
 <table id="library" border="1">
     <thead>
     <tr>
-    <th>Shelf Literature</th>
     <th>Shelf Art</th>
     <th>Shelf Science</th>
     <th>Shelf Sport</th>
+    <th>Shelf Literature</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,11 @@
 <div id="description">
 
 </div>
-<button type="button" onclick="addNewBook()" id="add-btn"> Add New Book </button>
+<br>
+Enter name of new book: <input type="text" id="newName" placeholder="New Book Name"> </input> <br>
+Enter shelf for new book (art/science/sport/literature): <input type="text" id="newShelf" placeholder="New Book Shelf"> </input> <br>
+<button type="button" onclick="addNewBook()"> Add New Book </button>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="booksLibrary.js"></script>
 </body>
