@@ -30,8 +30,8 @@ var titles =   [
     "expansion",
     "itch"];
 
-var maxShelfSize=7;
-var newId = 25;
+var maxShelfSize;
+var nextId = 0;
 // Load stuff from storage / init library
 var lib = JSON.parse(localStorage.getItem("library"));
 if (lib == undefined){
@@ -78,7 +78,7 @@ function Library(books) {
         }
     }
     //alert(this.art.books.length +" "+ this.science.books.length +" "+ this.sports.books.length + " " + this.literature.books.length);
-    maxShelfSize = Math.max(this.art.books.length,this.science.books.length,this.sport.books.length,this.literature.books.length);
+    //maxShelfSize = Math.max(this.art.books.length,this.science.books.length,this.sport.books.length,this.literature.books.length);
 }
 
 function constructLibrary(){
@@ -122,29 +122,81 @@ function prepareTable(){
     var trow;
     // Take care of <tr>s
     var i = 0;
-    if (maxShelfSize != numRows){
+    if (maxShelfSize != numRows && nextId < 25){
         for (i=0; i< maxShelfSize; i++){
             trow = tbody.insertRow(i);
+	    trow.insertCell(0).innerHTML="";
+	    trow.insertCell(1).innerHTML="";
+	    trow.insertCell(2).innerHTML="";
+	    trow.insertCell(3).innerHTML="";
         }
     }
 }
 
 function populateShelfAdmin(shelf){
+    maxShelfSize = Math.max(lib.art.books.length,lib.science.books.length,lib.sport.books.length,lib.literature.books.length);
+    var shelfNum;
+    if (shelf==lib.art) {
+	shelfNum=0;
+    }
+    else if (shelf==lib.science) {
+	shelfNum=1;
+    }
+    else if (shelf==lib.sport) {
+	shelfNum=2;
+    }
+    else {
+	shelfNum=3;
+    }
+    
     prepareTable();
     var tbody = document.getElementById("library").tBodies[0];
+    var numRows = tbody.rows.length;
     var trow;
     var tcell;
-    var tdiv;
     var i;
-    for(i=0; i < shelf.books.length; i++){
-        trow = tbody.rows[i];
-        tcell = trow.insertCell(-1); // -1 = append to the end
-        tdiv = '<div id="'+shelf.books[i].bookID+'" ';
-        if (shelf.books[i].borrowedBy != ""){
-            tdiv += 'style="background-color:red;" ';
-        }
-        tdiv += 'onclick="displayMetaData(this.id)">'+shelf.books[i].bookName+'</div>';
-        tcell.innerHTML = tdiv;
+    if (nextId > 24) {
+	if (numRows == shelf.books.length-1) {
+	    alert("first if");
+	    trow = tbody.insertRow(numRows);
+	    trow.insertCell(0);
+	    trow.insertCell(1);
+	    trow.insertCell(2);
+	    trow.insertCell(3);
+	    tcell = trow.cells[shelfNum];
+	    tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+	}
+	else {
+	    trow = tbody.rows[shelf.books.length-1];
+	    tcell = trow.cells[shelfNum];
+	    if (tcell.innerHTML == "") {
+		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+	    }
+	    else {
+		trow = tbody.insertRow(numRows);
+		trow.insertCell(0);
+		trow.insertCell(1);
+		trow.insertCell(2);
+		trow.insertCell(3);
+		tcell = trow.cells[shelfNum];
+		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+	    }
+	}
+    }
+    else {
+	for(i=0; i < shelf.books.length; i++){
+            trow = tbody.rows[i];
+            //tcell = trow.insertCell(-1); // -1 = append to the end
+	    tcell = trow.cells[shelfNum];
+            if (shelf.books[i].borrowedBy != ""){
+		tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+		nextId++;
+            }
+            else{
+		tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+		nextId++;
+            }
+	}
     }
 }
 
@@ -270,27 +322,30 @@ function returnBook(id){
     localStorage.setItem("user",JSON.stringify(user));
 }
 
+
 function addNewBook() {
-    newId++;
-    if (newId%4 == 0) {
-	lib.art.books.push(new Book(newId, "book"+newId, false));
-	populateShelf(lib.art);
-    }
-    else if (newId%4 == 1) {
-	lib.science.books.push(new Book(newId, "book"+newId, false));
-	populateShelf(lib.science);
-    }
-    else if (newId%4 == 2) {
-	lib.sport.books.push(new Book(newId, "book"+newId, false));
-	populateShelf(lib.sport);
-    }
-    else { // newId%4 == 3
-	lib.literature.books.push(new Book(newId, "book"+newId, false));
-	populateShelf(lib.literature);
+    var newName = document.getElementById("newName").value;
+    var newShelf = document.getElementById("newShelf").value;
+    if (newShelf != "art" && newShelf != "science" && newShelf != "sport" && newShelf != "literature") {
+	alert("Please enter a correct shelf: 'art' 'science' 'sport' or 'literature'");
     }
 
-    
-    
-    //displayLibrary(lib);
-    //alert(newBook.bookID + " " + newBook.bookName)
+
+    if (newShelf == "art") {
+	lib.art.books.push(new Book(nextId, newName, false));
+	populateShelfAdmin(lib.art);
+    }
+    else if (newShelf == "science") {
+	lib.science.books.push(new Book(nextId, newName, false));
+	populateShelfAdmin(lib.science);
+    }
+    else if (newShelf == "sport") {
+	lib.sport.books.push(new Book(nextId, newName, false));
+	populateShelfAdmin(lib.sport);
+    }
+    else { //literature
+	lib.literature.books.push(new Book(nextId, newName, false));
+	populateShelfAdmin(lib.literature);
+    }
+    nextId++;
 }
