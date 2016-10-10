@@ -99,12 +99,15 @@ return new Library(books);
 
 function displayLibrary(lib){
     if (user.name == "admin"){
+        // Admin view
         populateShelfAdmin(lib.literature);
         populateShelfAdmin(lib.art);
         populateShelfAdmin(lib.science);
         populateShelfAdmin(lib.sport);
     }
     else{
+        // UG View
+        document.getElementById("add-btn").style.display="none";
         populateShelfUG(lib.literature);
         populateShelfUG(lib.art);
         populateShelfUG(lib.science);
@@ -223,7 +226,7 @@ function borrowBook(id){
         book.presence = 0;
     }
     else{
-        alert("Book " + book.bookName + " already borrowed by " + studentID);
+        alert("ERROR. Book " + book.bookName + " already borrowed by " + book.borrowedBy);
         return;  // no changes
     }
     // Update Element to borrowed:
@@ -255,7 +258,7 @@ function returnBook(id){
         }
     }
     else{
-        alert("Book " + book.bookName + " already borrowed by " + studentID);
+        alert("ERROR. Book " + book.bookName + " already borrowed by " + book.borrowedBy);
         return;  // no changes
     }
     // TODO: save updates to local storage
