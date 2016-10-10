@@ -209,7 +209,11 @@ function displayMetaData(id){
 function borrowBook(id){
     var book = findBook(id);
     var studentID = user.name;
-    if (book.presence == 1){
+    if (book.isReference){
+        alert("ERROR. Cannot check out reference book.");
+        return;
+    }
+    else if (book.presence == 1){
         // Check if user exceeds limit of 2 borrowed books
         if (user.borrowed1 != "" && user.borrowed2 != ""){
             alert("LIMIT REACHED. User already borrowed " + findBook(user.borrowed1).bookName + " and " + findBook(user.borrowed2).bookName);
