@@ -30,7 +30,8 @@ var titles =   [
     "expansion",
     "itch"];
 
-var maxShelfSize;
+var maxShelfSize=7;
+var newId = 25;
 // Load stuff from storage / init library
 var lib = JSON.parse(localStorage.getItem("library"));
 if (lib == undefined){
@@ -76,6 +77,7 @@ function Library(books) {
             this.literature.books.push(books[i]);
         }
     }
+    //alert(this.art.books.length +" "+ this.science.books.length +" "+ this.sports.books.length + " " + this.literature.books.length);
     maxShelfSize = Math.max(this.art.books.length,this.science.books.length,this.sport.books.length,this.literature.books.length);
 }
 
@@ -129,7 +131,7 @@ function populateShelf(shelf){
             tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
         }
         else{
-        tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+            tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
         }
     }
 }
@@ -221,4 +223,29 @@ function returnBook(id){
     // TODO: save updates to local storage
     localStorage.setItem("library",JSON.stringify(lib));
     localStorage.setItem("user",JSON.stringify(user));
+}
+
+function addNewBook() {
+    newId++;
+    if (newId%4 == 0) {
+	lib.art.books.push(new Book(newId, "book"+newId, false));
+	populateShelf(lib.art);
+    }
+    else if (newId%4 == 1) {
+	lib.science.books.push(new Book(newId, "book"+newId, false));
+	populateShelf(lib.science);
+    }
+    else if (newId%4 == 2) {
+	lib.sport.books.push(new Book(newId, "book"+newId, false));
+	populateShelf(lib.sport);
+    }
+    else { // newId%4 == 3
+	lib.literature.books.push(new Book(newId, "book"+newId, false));
+	populateShelf(lib.literature);
+    }
+
+    
+    
+    //displayLibrary(lib);
+    //alert(newBook.bookID + " " + newBook.bookName)
 }
