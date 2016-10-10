@@ -98,10 +98,18 @@ return new Library(books);
 }
 
 function displayLibrary(lib){
-    populateShelf(lib.literature);
-    populateShelf(lib.art);
-    populateShelf(lib.science);
-    populateShelf(lib.sport);
+    if (user.name == "admin"){
+        populateShelfAdmin(lib.literature);
+        populateShelfAdmin(lib.art);
+        populateShelfAdmin(lib.science);
+        populateShelfAdmin(lib.sport);
+    }
+    else{
+        populateShelfUG(lib.literature);
+        populateShelfUG(lib.art);
+        populateShelfUG(lib.science);
+        populateShelfUG(lib.sport);
+    }
 }
 
 function prepareTable(){
@@ -118,7 +126,26 @@ function prepareTable(){
     }
 }
 
-function populateShelf(shelf){
+function populateShelfAdmin(shelf){
+    prepareTable();
+    var tbody = document.getElementById("library").tBodies[0];
+    var trow;
+    var tcell;
+    var tdiv;
+    var i;
+    for(i=0; i < shelf.books.length; i++){
+        trow = tbody.rows[i];
+        tcell = trow.insertCell(-1); // -1 = append to the end
+        tdiv = '<div id="'+shelf.books[i].bookID+'" ';
+        if (shelf.books[i].borrowedBy != ""){
+            tdiv += 'style="background-color:red;" ';
+        }
+        tdiv += 'onclick="displayMetaData(this.id)">'+shelf.books[i].bookName+'</div>';
+        tcell.innerHTML = tdiv;
+    }
+}
+
+function populateShelfUG(shelf){
     prepareTable();
     var tbody = document.getElementById("library").tBodies[0];
     var trow;
@@ -163,6 +190,17 @@ function findBook(id){
         }
     }
 return -1;
+}
+
+function displayMetaData(id){
+    var book = findBook(id);
+    var descr = document.getElementById("description");
+    var text = '<p>Title: '+book.bookName + '<br>' +
+                'Availability: '+ book.presence + '<br>' +
+                'Borrowed by ' + book.borrowedBy + '<br>' +
+                'Is reference: ' + book.isReference + '<br>'+
+                'Library ID: ' + book.bookID + '</p>';
+    descr.innerHTML = text;
 }
 
 function borrowBook(id){
