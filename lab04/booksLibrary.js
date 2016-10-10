@@ -77,8 +77,6 @@ function Library(books) {
             this.literature.books.push(books[i]);
         }
     }
-    //alert(this.art.books.length +" "+ this.science.books.length +" "+ this.sports.books.length + " " + this.literature.books.length);
-    //maxShelfSize = Math.max(this.art.books.length,this.science.books.length,this.sport.books.length,this.literature.books.length);
 }
 
 function constructLibrary(){
@@ -107,7 +105,11 @@ function displayLibrary(lib){
     }
     else{
         // UG View
-        document.getElementById("add-btn").style.display="none";
+	document.getElementById("enter-name").style.display="none";
+	document.getElementById("newName").style.display="none";
+	document.getElementById("enter-shelf").style.display="none";
+	document.getElementById("newShelf").style.display="none";
+        document.getElementById("add-button").style.display="none";
         populateShelfUG(lib.literature);
         populateShelfUG(lib.art);
         populateShelfUG(lib.science);
@@ -148,7 +150,6 @@ function populateShelfAdmin(shelf){
     else {
 	shelfNum=3;
     }
-    
     prepareTable();
     var tbody = document.getElementById("library").tBodies[0];
     var numRows = tbody.rows.length;
@@ -163,13 +164,13 @@ function populateShelfAdmin(shelf){
 	    trow.insertCell(2);
 	    trow.insertCell(3);
 	    tcell = trow.cells[shelfNum];
-	    tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+	    tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="displayMetaData(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
 	}
 	else {
 	    trow = tbody.rows[shelf.books.length-1];
 	    tcell = trow.cells[shelfNum];
 	    if (tcell.innerHTML == "") {
-		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="displayMetaData(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
 	    }
 	    else {
 		trow = tbody.insertRow(numRows);
@@ -178,7 +179,7 @@ function populateShelfAdmin(shelf){
 		trow.insertCell(2);
 		trow.insertCell(3);
 		tcell = trow.cells[shelfNum];
-		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
+		tcell.innerHTML = '<div id="'+shelf.books[shelf.books.length-1].bookID+'" onclick="displayMetaData(this.id)";>'+shelf.books[shelf.books.length-1].bookName+'</div>';
 	    }
 	}
     }
@@ -188,11 +189,11 @@ function populateShelfAdmin(shelf){
             //tcell = trow.insertCell(-1); // -1 = append to the end
 	    tcell = trow.cells[shelfNum];
             if (shelf.books[i].borrowedBy != ""){
-		tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+		tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="displayMetaData(this.id)";>'+shelf.books[i].bookName+'</div>';
 		nextId++;
             }
             else{
-		tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+		tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="displayMetaData(this.id)";>'+shelf.books[i].bookName+'</div>';
 		nextId++;
             }
 	}
@@ -200,6 +201,20 @@ function populateShelfAdmin(shelf){
 }
 
 function populateShelfUG(shelf){
+    maxShelfSize = Math.max(lib.art.books.length,lib.science.books.length,lib.sport.books.length,lib.literature.books.length);
+    var shelfNum;
+    if (shelf==lib.art) {
+	shelfNum=0;
+    }
+    else if (shelf==lib.science) {
+	shelfNum=1;
+    }
+    else if (shelf==lib.sport) {
+	shelfNum=2;
+    }
+    else {
+	shelfNum=3;
+    }
     prepareTable();
     var tbody = document.getElementById("library").tBodies[0];
     var trow;
@@ -207,43 +222,43 @@ function populateShelfUG(shelf){
     var i;
     for(i=0; i < shelf.books.length; i++){
         trow = tbody.rows[i];
-        tcell = trow.insertCell(-1); // -1 = append to the end
+        //tcell = trow.insertCell(-1); // -1 = append to the end
+	tcell = trow.cells[shelfNum];
         if (shelf.books[i].borrowedBy != ""){
-            tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+	    tcell.innerHTML = '<div style="background-color:red;" id="'+shelf.books[i].bookID+'" onclick="returnBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+	    nextId++;
         }
         else{
-            tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+	    tcell.innerHTML = '<div id="'+shelf.books[i].bookID+'" onclick="borrowBook(this.id)";>'+shelf.books[i].bookName+'</div>';
+	    nextId++;
         }
     }
+    
 }
 
 function findBook(id){
     var i;
-    if (id % 4 == 0){
-        for(i=0; i < lib.art.books.length; i++){
-            if (lib.art.books[i].bookID == id)
-                return lib.art.books[i];
-        }
+    for(i=0; i < lib.art.books.length; i++){
+        if (lib.art.books[i].bookID == id)
+            return lib.art.books[i];
     }
-    else if (id % 4 == 1){
-        for(i=0; i < lib.science.books.length; i++){
-            if (lib.science.books[i].bookID == id)
-                return lib.science.books[i];
-        }
+    
+    for(i=0; i < lib.science.books.length; i++){
+        if (lib.science.books[i].bookID == id)
+            return lib.science.books[i];
     }
-    else if (id % 4 == 2){
-        for(i=0; i < lib.sport.books.length; i++){
-            if (lib.sport.books[i].bookID == id)
-                return lib.sport.books[i];
-        }
+    
+    for(i=0; i < lib.sport.books.length; i++){
+        if (lib.sport.books[i].bookID == id)
+            return lib.sport.books[i];
     }
-    else{
-        for(i=0; i < lib.literature.books.length; i++){
-            if (lib.literature.books[i].bookID == id)
-                return lib.literature.books[i];
-        }
+    
+    for(i=0; i < lib.literature.books.length; i++){
+        if (lib.literature.books[i].bookID == id)
+            return lib.literature.books[i];
     }
-return -1;
+
+    return -1;
 }
 
 function displayMetaData(id){
