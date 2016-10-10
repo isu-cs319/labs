@@ -327,6 +327,7 @@ function addNewBook() {
     var newShelf = document.getElementById("newShelf").value;
     if (newShelf != "art" && newShelf != "science" && newShelf != "sport" && newShelf != "literature") {
 	alert("Please enter a correct shelf: 'art' 'science' 'sport' or 'literature'");
+	return false;
     }
 
 
