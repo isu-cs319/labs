@@ -157,7 +157,6 @@ function populateShelfAdmin(shelf){
     var i;
     if (nextId > 24) {
 	if (numRows == shelf.books.length-1) {
-	    alert("first if");
 	    trow = tbody.insertRow(numRows);
 	    trow.insertCell(0);
 	    trow.insertCell(1);
