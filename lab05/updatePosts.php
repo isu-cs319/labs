@@ -18,6 +18,7 @@ elseif ($action == "add"){
     $date = $_POST["date"];
     $title = $_POST["title"];
     add_new_post($title,$msg,$date,$user);
+    print_table_body();
 }
 elseif ($action == "remove"){
 
@@ -32,9 +33,10 @@ function add_new_post($title,$body, $date, $user){
         "time" => $date,
         "user" => $user
     );
+    $posts_dump[count($posts_dump)] = $new_post;
 
     // Update posts.json
-    file_put_contents('posts.json', json_encode($posts_dump += $new_post));
+    file_put_contents('posts.json', json_encode($posts_dump));
 }
 
 function update_post_body($id, $body){

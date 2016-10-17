@@ -27,15 +27,14 @@
                         "user":user
                     },
                     success: function(result){
-                        console.log(result);
                     $("#posts").html(result);
                 }});
             }
         }
 
         function addPost(){
-            var title = $("#post-title");
-            var body = $("#post-body");
+            var title = $("#post-title").val();
+            var body = $("#post-body").val();
             var date = new Date();
             $.ajax({
                 url: "updatePosts.php",
@@ -48,7 +47,6 @@
                     "title":title
                 },
                 success: function(result){
-                    console.log(result);
                     $("#posts").html(result);
                 }});
         }
@@ -81,7 +79,6 @@
     </tbody>
 </table>
 <div>
-<h4>Create Post</h4>
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add</button>
 
