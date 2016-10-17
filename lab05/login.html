@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+  <title> Login </title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+
+<body>
+  
+  <form id="login" name="login" method="post" action="viewPosts.php">
+    <fieldset>
+      <legend> Login </legend>
+      
+      <br>
+      Username: <br>
+      <input type="text" id="username" name="username" required> <br> <br>
+      Password: <br>
+      <input type="password" id="password" name="password" required> <br> <br>
+
+      <button type="submit"> Login </button>
+      
+      <script type="text/javascript">
+	$(document).ready(function(){
+        $("button").click(function(){
+	
+        $.ajax({
+        type: "POST",
+        url: "checkLogin.php",
+	data: $("#login").serialize(),
+	dataType: "json",
+        success: function(data) {
+	console.log(data);
+	if (data == "True"){
+	alert("true");
+	}
+	else {
+	alert("false");
+	}
+	
+	}
+        })
+	});
+	});
+	
+      </script>
+
+    </fieldset>
+    
+  </form>
+  
+</body>
+</html>

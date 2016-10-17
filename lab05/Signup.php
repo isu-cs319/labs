@@ -66,7 +66,7 @@ $decipheredtext = rsa_decrypt($ciphertext, $private_key);
   fwrite($myfile, $private_key);
   fwrite($myfile, ":");
   fwrite($myfile, $public_key);
-  fwrite($myfile, "\n\n");
+  fwrite($myfile, "\n");
       }
       else {
       fwrite($myfile, "ERROR username and password were empty\n");
