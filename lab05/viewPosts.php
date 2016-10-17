@@ -14,7 +14,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         function editPost(id){
-            alert(id);
             var new_body = prompt("Enter new Post body");
             if (new_body != null){
                 $.ajax({
@@ -25,6 +24,7 @@
                         "id":id
                     },
                     success: function(result){
+                        console.log(result);
                     $("#posts").html(result);
                 }});
             }
