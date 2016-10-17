@@ -15,6 +15,19 @@
     <script>
         function editPost(id){
             alert(id);
+            var new_body = prompt("Enter new Post body");
+            if (new_body != null){
+                $.ajax({
+                    url: "updatePosts.php",
+                    type: "POST",
+                    data:{
+                        "msg":new_body,
+                        "id":id
+                    },
+                    success: function(result){
+                    $("#posts").html(result);
+                }});
+            }
         }
     </script>
 </head>
@@ -29,18 +42,18 @@
         <th>Action</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="posts">
     <?php
-    $posts_dump = json_decode(file_get_contents("posts.json"), true);
-    foreach ($posts_dump as $post){
-        echo '<tr>';
-        echo '<td>' . $post["title"] . '</td>';
-        echo '<td>' . $post["body"] . '</td>';
-        echo '<td>' . $post["time"] . '</td>';
-        echo '<td>' . $post["user"] . '</td>';
-        echo '<td><button type="button" value="' . $post["id"] . '" onclick="editPost(this.value)"> Edit Post ' . $post["id"] . '</button></td>';
-        echo '</tr>';
-    }
+        $posts_dump = json_decode(file_get_contents("posts.json"), true);
+        foreach ($posts_dump as $post){
+            echo '<tr>';
+            echo '<td>' . $post["title"] . '</td>';
+            echo '<td>' . $post["body"] . '</td>';
+            echo '<td>' . $post["time"] . '</td>';
+            echo '<td>' . $post["user"] . '</td>';
+            echo '<td><button type="button" value="' . $post["id"] . '" onclick="editPost(this.value)"> Edit Post ' . $post["id"] . '</button></td>';
+            echo '</tr>';
+        }
     ?>
     </tbody>
 </table>
