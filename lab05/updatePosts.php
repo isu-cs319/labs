@@ -1,9 +1,40 @@
 <?php
+
+// Fetch POST data
 $msg = $_POST["msg"];
-$id = $_POST["id"];
-if ($msg != null && $id != null){
-    update_post_body($id,$msg);
-    print_table_body();
+$action = $_POST["action"];
+$user = $_POST["user"];
+
+// Take action
+
+if ($action == "edit"){
+    $id = $_POST["id"];
+    if ($msg != null && $id != null){
+        update_post_body($id,$msg);
+        print_table_body();
+    }
+}
+elseif ($action == "add"){
+    $date = $_POST["date"];
+    $title = $_POST["title"];
+    add_new_post($title,$msg,$date,$user);
+}
+elseif ($action == "remove"){
+
+}
+
+function add_new_post($title,$body, $date, $user){
+    $posts_dump = json_decode(file_get_contents("posts.json"),true);
+    $new_post = array(
+        "id" => count($posts_dump),
+        "title" => $title,
+        "body" => $body,
+        "time" => $date,
+        "user" => $user
+    );
+
+    // Update posts.json
+    file_put_contents('posts.json', json_encode($posts_dump += $new_post));
 }
 
 function update_post_body($id, $body){
