@@ -13,7 +13,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        var user = "placeholder";  //TODO: Load from local storage!
+      var user = localStorage.getItem('username');  //TODO: Load from local storage!
         function editPost(id){
             var new_body = prompt("Enter new Post body");
             if (new_body != null){
