@@ -13,7 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        var user = "placeholder";  //TODO: Load from local storage!
+        var user = localStorage.getItem('username');
+        $("#inbox-title").html(user);
         function editPost(id){
             var new_body = prompt("Enter new Post body");
             if (new_body != null){
@@ -64,6 +65,19 @@
                 },
                 success: function(result){
                     console.log(result);
+                }});
+        }
+        function getMsgs(){
+            $.ajax({
+                url: "inbox.php",
+                type: "POST",
+                data:{
+                    "action":"fetch",
+                    "user":user
+                },
+                success: function(result){
+                    console.log(result);
+                    $("#inbox-table-body").html(result);
                 }});
         }
     </script>
@@ -142,6 +156,40 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+</div>
+<div>
+    <!-- Trigger the Inbox with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#inboxModal">View Inbox</button>
+
+    <!-- Modal -->
+    <div id="inboxModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Viewing Inbox</h4>
+                </div>
+                <div class="modal-body" id="inbox">
+                    <h3 id="inbox-title"></h3>
+                    <br>
+                    <table id="inbox-table">
+                        <thead>
+                        <tr>
+                            <th>Sent from</th>
+                            <th>Body</th>
+                        </tr>
+                        </thead>
+                        <tbody id="inbox-table-body">
+                        </tbody>
+                        </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info btn-lg" onclick="getMsgs();">Fetch Inbox</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
