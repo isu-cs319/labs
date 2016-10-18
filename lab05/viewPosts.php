@@ -16,23 +16,31 @@
       var user = localStorage.getItem('username');
       document.write("You are logged in as " + user + ".");
         $("#inbox-title").html(user + " - Viewing Inbox");
-        function editPost(id){
-            var new_body = prompt("Enter new Post body");
-            if (new_body != null){
-                $.ajax({
-                    url: "updatePosts.php",
-                    type: "POST",
-                    data:{
-                        "action":"edit",
-                        "msg":new_body,
-                        "id":id,
-                        "user":user
-                    },
-                    success: function(result){
-                        $("#posts").html(result);
-                    }});
-            }
-        }
+      function editPost(id){
+          if (user != 'admin'){
+              var new_body = prompt("Enter new Post body");
+              if (new_body != null){
+                  $.ajax({
+                      url: "updatePosts.php",
+                      type: "POST",
+                      data:{
+                          "action":"edit",
+                          "msg":new_body,
+                          "id":id,
+                          "user":user
+                      },
+                      success: function(result){
+                          $("#posts").html(result);
+                      }});
+              }
+          }
+          else{
+              var r = confirm("Delete Message?");
+              if (r){
+                  removePost(id);
+              }
+          }
+      }
         function addPost(){
             var title = $("#post-title").val();
             var body = $("#post-body").val();

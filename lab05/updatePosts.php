@@ -34,9 +34,6 @@ function remove_post($id){
             unset($posts_dump[$i]);
             $decrement = true;
         }
-        if ($decrement){
-            $posts_dump[$i]["id"] = $i-1;
-    }
     // Write to file
     file_put_contents('posts.json',json_encode($posts_dump));
     }
