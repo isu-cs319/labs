@@ -50,6 +50,22 @@
                     $("#posts").html(result);
                 }});
         }
+        function sendMsg(){
+            var body = $("#msg-body");
+            var receiver = $("#msg-receiver");
+            $.ajax({
+                url: "sendMessage.php",
+                type: "POST",
+                data:{
+                    "action":"send",
+                    "msg":body,
+                    "receiver":receiver,
+                    "sender":user
+                },
+                success: function(result){
+                    console.log(result);
+                }});
+        }
     </script>
 </head>
 <body>
@@ -79,7 +95,7 @@
     </tbody>
 </table>
 <div>
-    <!-- Trigger the modal with a button -->
+    <!-- Trigger the add post with a button -->
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add</button>
 
     <!-- Modal -->
@@ -97,6 +113,32 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info btn-lg" onclick="addPost();">Add</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div>
+    <!-- Trigger the send message with a button -->
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#sendModal">Add</button>
+
+    <!-- Modal -->
+    <div id="sendModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Creating new Post</h4>
+                </div>
+                <div class="modal-body">
+                    <input type="text" placeholder="Enter Receiver Username" id="msg-receiver"/>
+                    <input type="text" placeholder="Enter Msg" id="msg-body"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info btn-lg" onclick="sendMsg();">Send Msg</button>
                 </div>
             </div>
 

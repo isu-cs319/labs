@@ -1,0 +1,12 @@
+[
+  {
+    "receiver":"Emily",
+    "sender" : "david",
+    "msg":"encrypt me"
+  },
+  {
+    "receiver":"david",
+    "sender" : "Emily",
+    "msg":"encrypt me plz"
+  }
+]

@@ -33,8 +33,8 @@ function rsa_decrypt($string, $private_key)
 	$rsa->setPrivateKeyFormat(CRYPT_RSA_PRIVATE_FORMAT_PKCS1);
 	$rsa->setPublicKeyFormat(CRYPT_RSA_PUBLIC_FORMAT_PKCS1);
 	extract($rsa->createKey(1024)); /// makes $publickey and $privatekey available
-	echo $privatekey;
-	echo $publickey;
+	//echo $privatekey;
+	//echo $publickey;
 //Private key
 $private_key = $privatekey;
 $public_key = $publickey;
@@ -45,4 +45,4 @@ $ciphertext = rsa_encrypt($plaintext, $public_key);
 $decipheredtext = rsa_decrypt($ciphertext, $private_key);
 
 //Echo out results
-echo sprintf("<h4>Plaintext for RSA encryption:</h4><p>%s</p><h4>After encryption:</h4><p>%s</p><h4>After decryption:</h4><p>%s</p>", $plaintext, $ciphertext, $decipheredtext);
+//echo sprintf("<h4>Plaintext for RSA encryption:</h4><p>%s</p><h4>After encryption:</h4><p>%s</p><h4>After decryption:</h4><p>%s</p>", $plaintext, $ciphertext, $decipheredtext);

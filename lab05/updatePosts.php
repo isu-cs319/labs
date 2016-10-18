@@ -21,7 +21,25 @@ elseif ($action == "add"){
     print_table_body();
 }
 elseif ($action == "remove"){
+    $id = $_POST["id"];
+    remove_post($id);
+    print_table_body();
+}
 
+function remove_post($id){
+    $posts_dump = json_decode(file_get_contents("posts.json"),true);
+    $decrement = false;
+    for ($i=0; $i < count($posts_dump); $i++){
+        if ($posts_dump[$i]["id"] == $id){
+            unset($posts_dump[$i]);
+            $decrement = true;
+        }
+        if ($decrement){
+            $posts_dump[$i]["id"] = $i-1;
+    }
+    // Write to file
+    file_put_contents('posts.json',json_encode($posts_dump));
+    }
 }
 
 function add_new_post($title,$body, $date, $user){
