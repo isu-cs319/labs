@@ -28,8 +28,8 @@
                         "user":user
                     },
                     success: function(result){
-                    $("#posts").html(result);
-                }});
+                        $("#posts").html(result);
+                    }});
             }
         }
 
@@ -95,16 +95,16 @@
     </thead>
     <tbody id="posts">
     <?php
-        $posts_dump = json_decode(file_get_contents("posts.json"), true);
-        foreach ($posts_dump as $post){
-            echo '<tr>';
-            echo '<td>' . $post["title"] . '</td>';
-            echo '<td>' . $post["body"] . '</td>';
-            echo '<td>' . $post["time"] . '</td>';
-            echo '<td>' . $post["user"] . '</td>';
-            echo '<td><button type="button" value="' . $post["id"] . '" onclick="editPost(this.value)"> Edit Post ' . $post["id"] . '</button></td>';
-            echo '</tr>';
-        }
+    $posts_dump = json_decode(file_get_contents("posts.json"), true);
+    foreach ($posts_dump as $post){
+        echo '<tr>';
+        echo '<td>' . $post["title"] . '</td>';
+        echo '<td>' . $post["body"] . '</td>';
+        echo '<td>' . $post["time"] . '</td>';
+        echo '<td>' . $post["user"] . '</td>';
+        echo '<td><button type="button" value="' . $post["id"] . '" onclick="editPost(this.value)"> Edit Post ' . $post["id"] . '</button></td>';
+        echo '</tr>';
+    }
     ?>
     </tbody>
 </table>
@@ -184,7 +184,7 @@
                         </thead>
                         <tbody id="inbox-table-body">
                         </tbody>
-                        </table>
+                    </table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info btn-lg" onclick="getMsgs();">Fetch Inbox</button>
