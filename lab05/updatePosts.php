@@ -34,9 +34,12 @@ function remove_post($id){
             unset($posts_dump[$i]);
             $decrement = true;
         }
+    }
+    if (!$decrement){
+        unset($posts_dump[count($posts_dump)-1]);
+    }
     // Write to file
     file_put_contents('posts.json',json_encode($posts_dump));
-    }
 }
 
 function add_new_post($title,$body, $date, $user){
