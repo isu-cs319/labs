@@ -13,7 +13,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
-        var user = localStorage.getItem('username');
+      var user = localStorage.getItem('username');
+      document.write("You are logged in as " + user + ".");
         $("#inbox-title").html(user + " - Viewing Inbox");
         function editPost(id){
             var new_body = prompt("Enter new Post body");
@@ -32,7 +33,6 @@
                     }});
             }
         }
-
         function addPost(){
             var title = $("#post-title").val();
             var body = $("#post-body").val();
@@ -97,6 +97,7 @@
     </script>
 </head>
 <body>
+  <a href="logout.php"> Logout </a> <br>
 <table id="post-table">
     <thead>
     <tr>
