@@ -51,8 +51,8 @@
                 }});
         }
         function sendMsg(){
-            var body = $("#msg-body");
-            var receiver = $("#msg-receiver");
+            var body = $("#msg-body").val();
+            var receiver = $("#msg-receiver").val();
             $.ajax({
                 url: "sendMessage.php",
                 type: "POST",
@@ -122,7 +122,7 @@
 
 <div>
     <!-- Trigger the send message with a button -->
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#sendModal">Add</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#sendModal">Send Msg</button>
 
     <!-- Modal -->
     <div id="sendModal" class="modal fade" role="dialog">
@@ -138,7 +138,7 @@
                     <input type="text" placeholder="Enter Msg" id="msg-body"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info btn-lg" onclick="sendMsg();">Send Msg</button>
+                    <button type="button" class="btn btn-info btn-lg" onclick="sendMsg();">Submit</button>
                 </div>
             </div>
 

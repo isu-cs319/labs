@@ -1,4 +1,5 @@
 <?php
+
 include_once('Crypt/RSA.php');
 
 //Function for encrypting with RSA
@@ -19,8 +20,9 @@ $action = $_POST["action"];
 $user = $_POST["sender"];
 $receiver = $_POST["receiver"];
 
-if ($receiver == "send"){
-    $public_key = getPublicKey($user);
+
+if ($action == "send"){
+    $public_key = getPublicKey($receiver);
     addMessage($public_key);
 }
 
@@ -28,11 +30,13 @@ if ($receiver == "send"){
 function addMessage($public_key){
     global $msg, $user, $receiver;
     $msgs_dump = json_decode(file_get_contents("messages.json"),true);
+    $msg_encrypted = utf8_encode(rsa_encrypt($msg,$public_key));
     $new_post = array(
         "receiver" => $receiver,
         "sender" => $user,
-        "msg" => rsa_encrypt($msg,$public_key)
+        "msg" => $msg_encrypted
     );
+    var_dump($new_post);
     $msgs_dump[count($msgs_dump)] = $new_post;
     // Update msgs.json
     file_put_contents('messages.json', json_encode($msgs_dump));
@@ -48,6 +52,7 @@ function getPublicKey($user){
     }
     return "";
 }
+
 function getPrivateKey($user){
     $users = file_get_contents("users.txt");
     $chunks = explode(":", $users);
