@@ -21,7 +21,8 @@
       
       <script type="text/javascript">
 	$(document).ready(function(){
-        $("button").click(function(){
+	$("#login").submit( function(event) {
+	event.preventDefault();
 	
         $.ajax({
         type: "POST",
@@ -30,13 +31,12 @@
 	dataType: "json",
         success: function(data) {
 	console.log(data);
-	if (data == "True"){
-	alert("true");
+	if (data == "True") {
+	window.location.replace("viewPosts.php");
 	}
 	else {
-	alert("false");
+	alert("Please enter corrent username and password");
 	}
-	
 	}
         })
 	});
