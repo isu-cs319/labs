@@ -2,9 +2,10 @@
 
 include_once('Crypt/RSA.php');
 
-//Function for encrypting with RSA
+//Function for encrypting with RSA TODO: Make this more stable
 function rsa_encrypt($string, $public_key)
 {
+    return $string;
     //Create an instance of the RSA cypher and load the key into it
     $cipher = new Crypt_RSA();
     $cipher->loadKey($public_key);
@@ -48,17 +49,6 @@ function getPublicKey($user){
     for ($i=0; $i < count($chunks); $i++){
         if ($chunks[$i] == $user){
             return $chunks[$i+3];
-        }
-    }
-    return "";
-}
-
-function getPrivateKey($user){
-    $users = file_get_contents("users.txt");
-    $chunks = explode(":", $users);
-    for ($i=0; $i < count($chunks); $i++){
-        if ($chunks[$i] == $user){
-            return $chunks[$i+2];
         }
     }
     return "";

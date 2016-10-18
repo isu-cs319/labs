@@ -24,7 +24,7 @@ function getPrivateKey($user){
     return "";
 }
 
-//Function for decrypting with RSA
+//Function for decrypting with RSA. TODO: Throws some strange infinite internal error
 function rsa_decrypt($string, $private_key)
 {
     return $string;

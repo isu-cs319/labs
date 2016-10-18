@@ -14,7 +14,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script>
         var user = localStorage.getItem('username');
-        $("#inbox-title").html(user);
+        $("#inbox-title").html(user + " - Viewing Inbox");
         function editPost(id){
             var new_body = prompt("Enter new Post body");
             if (new_body != null){
@@ -46,6 +46,20 @@
                     "date":date,
                     "user":user,
                     "title":title
+                },
+                success: function(result){
+                    $("#posts").html(result);
+                }});
+        }
+        function removePost(id){
+            $.ajax({
+                url: "updatePosts.php",
+                type: "POST",
+                data:{
+                    "action":"remove",
+                    "msg":"",
+                    "user":user,
+                    "id":id
                 },
                 success: function(result){
                     $("#posts").html(result);
@@ -170,11 +184,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Viewing Inbox</h4>
+                    <h4 class="modal-title" id="inbox-title">Viewing Inbox</h4>
                 </div>
                 <div class="modal-body" id="inbox">
-                    <h3 id="inbox-title"></h3>
-                    <br>
                     <table id="inbox-table">
                         <thead>
                         <tr>
