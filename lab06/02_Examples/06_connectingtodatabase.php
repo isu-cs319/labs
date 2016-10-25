@@ -6,7 +6,7 @@
 
 $username = "root";
 $password = "abcdef";
-$dbServer = "127.0.0.1"; 
+$dbServer = "127.0.0.1";
 $dbName   = "PlayingWithMySQL";
 
 // --------------------------------------
