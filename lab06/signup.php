@@ -14,23 +14,23 @@
   <?php
 
      session_start();
-     $_SESSION["tester"] = "YAA";
 
-     $_SESSION["username"] = "";
+     $username = "";
      $password = "";
      $email = "";
      $phone = "";
-     $_SESSION["librarian"] = "";
+     $librarian = "";
      $firstname = "";
      $lastname = "";
 
-     $usernameErr = "";
-     $password1Err = "";
-     $password2Err = "";
-     $emailErr = "";
-     $phoneErr = "";
-     $firstnameErr = "";
-     $lastnameErr = "";
+     $usernameErr = "*";
+     $password1Err = "*";
+     $password2Err = "*";
+     $emailErr = "*";
+     $phoneErr = "*";
+     $firstnameErr = "*";
+     $lastnameErr = "*";
+     
 
      if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -38,9 +38,12 @@
        $usernameErr = "* This field is required";
      }
      else {
-       $_SESSION["username"] = $_POST["username"];
-       if (!preg_match("/^[a-zA-Z0-9]*$/",$_SESSION["username"])) {
+       $username = $_POST["username"];
+       if (!preg_match("/^[a-zA-Z0-9]*$/",$username)) {
          $usernameErr = "* Only letters and numbers allowed"; 
+       }
+       else {
+         $usernameErr = "";
        }
      }
 
@@ -53,9 +56,12 @@
      else {
        if ($_POST["password1"] != $_POST["password2"]) {
          $password1Err = "* Passwords to not match";
+         $password2Err = "";
        }
        else {
          $password = $_POST["password1"];
+         $password1Err = "";
+         $password2Err = "";
        }
      }
 
@@ -67,6 +73,9 @@
        if (!preg_match("/^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,4}$/", $email)) {
          $emailErr = "* Email must be in format xxx@xxx.xxx and must be alphanumeric";
        }
+       else {
+         $emailErr = "";
+       }
      }
 
      if (empty($_POST["phone"])) {
@@ -77,13 +86,17 @@
        if ((!preg_match("/^[0-9]{3}-[0-9]{3}-[0-9]{4}$/", $phone)) && (!preg_match("/^[0-9]{10}$/", $phone))) {
          $phoneErr = "* Phone must be in format xxx-xxx-xxxx or xxxxxxxxxx";
        }
+       else {
+         $phoneErr = "";
+         $phone = preg_replace("/[^0-9]/", "", $phone);
+       }
      }
 
      if (isset($_POST["librarian"])) {
-     $_SESSION["librarian"] = "librarian";
+     $librarian = "1";
      }
      else {
-     $_SESSION["librarian"] = "student";
+     $librarian = "0";
      }
 
      if (empty($_POST["firstname"])) {
@@ -94,6 +107,9 @@
        if (!preg_match("/^[a-zA-Z]*$/",$firstname)) {
          $firstnameErr = "* Only letters allowed"; 
        }
+       else {
+         $firstnameErr = "";
+       }
      }
 
      if (empty($_POST["lastname"])) {
@@ -103,6 +119,9 @@
        $lastname = $_POST["lastname"];
        if (!preg_match("/^[a-zA-Z]*$/",$lastname)) {
          $lastnameErr = "* Only letters allowed"; 
+       }
+       else {
+         $lastnameErr = "";
        }
      }
 
@@ -115,10 +134,11 @@
     <!--action="Signup.php"-->
     <fieldset>
       <legend> Sign Up </legend>
-
       <br>
+      <span class="error">* is required field </span>
+      <br> <br>
       Enter Username:
-      <input type="text" name="username" value="<?php echo $_SESSION["username"];?>">
+      <input type="text" name="username" value="<?php echo $username;?>">
       <span class="error"> <?php echo $usernameErr;?> </span>
       <br> <br>
       Enter Password:
@@ -139,7 +159,7 @@
       <br> <br>
       <input type="checkbox" name="librarian" value="librarian">
       Check this box if you are a librarian
-      <span class="error"> <?php echo $_SESSION["librarian"];?> </span>
+      <!-- <span class="error"> <?php echo $librarian;?> </span> -->
       <br> <br>
       Enter First Name:
       <input type="text" name="firstname" value="<?php echo $firstname;?>">
@@ -156,7 +176,7 @@
     </fieldset>
   </form>
   <br>
-  Already signed up? <a href="login.html"> Click here to login </a>
+  Already signed up? <a href="login.html"> Click here to login </a> <br>
   
   <?php
   if ($usernameErr == "" &&
@@ -166,7 +186,17 @@
      $phoneErr == "" &&
      $firstnameErr == "" &&
      $lastnameErr == "") {
-     echo "<br> <br> no errors->redirect to login";
+     
+     require_once 'DBController.php';
+     
+     $db_handle = new DBController();
+     $password = md5($password);
+     $sql = "INSERT INTO users (userName, Password, Email, Phone, Librarian, FirstName, LastName)
+	     VALUES ($username, $password, $email, $phone, $librarian, $firstname, $lastname);";
+     $db_handle->run($sql);
+     
+     echo "<br> <br> Thanks for signing up. Redirecting to login page...";
+     //echo "<meta http-equiv='refresh' content='.5;url=login.html'>";
      }
      ?>
   
