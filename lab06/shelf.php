@@ -36,4 +36,5 @@ class shelf
         $sql = sprintf($sql,$book_id);
         $this->db_handle->run($sql);
     }
+
 }
