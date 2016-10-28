@@ -26,5 +26,4 @@ div {
 
 <?php
 $std = new student($_SESSION["username"]);
-$std->addBook(0,"Harry Potter","J.K. Rowling");
 ?>

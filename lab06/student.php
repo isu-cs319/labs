@@ -14,10 +14,11 @@ class student
         $this->id = $userName;
         $this->db_handle = new DBController();
     }
-    function addBook($id,$title,$author){
-        $sql = "INSERT INTO books (BookId, BookTitle, Author, Availability) VALUES (%d,'%s','%s',%d);";
-        $sql = sprintf($sql,$id,$title,$author,1);
-        $this->db_handle->run($sql);
+
+    function borrowHistory(){
+        $sql = "SELECT * FROM loanHistory WHERE UserName='%s';";
+        $sql = sprintf($sql, $this->id);
+        return $this->db_handle->run($sql);
     }
 
 }
