@@ -1,10 +1,11 @@
 <?php
 require_once 'DBController.php';
-require_once 'student.php';
 require_once 'library.php';
-require_once 'shelf.php';
+require_once 'student.php';
 // Start the session
 session_start();
+
+$std = new student($_SESSION["username"]);
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +24,3 @@ div {
   
 </body>
 </html>
-
-<?php
-$std = new student($_SESSION["username"]);
-?>

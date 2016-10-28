@@ -8,7 +8,7 @@ class shelf
         $this->db_handle = new DBController();
         $this->shelves = array("Art","Science","Literature","Sport");
     }
-
+    // DO NOT USE, SEE LIBRARY.PHP
     function addBook($shelf_id,$book_id){
         if ($shelf_id > 3){
             error_log("Invalid shelf id " . (string)($shelf_id));
@@ -25,16 +25,17 @@ class shelf
             echo "Too many books in Shelf";
             return;
         }
+        // TODO: Check if book already exists! (No constraints set in DB)
         else{
         $sql = "INSERT INTO shelves (ShelfId, ShelfName, BookId) VALUES (%d,'%s',%d);";
         $sql = sprintf($sql,$shelf_id,$this->shelves[$shelf_id],$book_id);
         $this->db_handle->run($sql);
         }
     }
+    // DO NOT USE, SEE LIBRARY.PHP
     function deleteBook($book_id){
         $sql = "DELETE FROM shelves WHERE BookId=%d;";
         $sql = sprintf($sql,$book_id);
         $this->db_handle->run($sql);
     }
-
 }

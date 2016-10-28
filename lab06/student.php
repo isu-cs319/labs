@@ -1,11 +1,6 @@
 <?php
 require_once 'DBController.php';
-/**
- * Created by PhpStorm.
- * User: schott
- * Date: 24.10.16
- * Time: 21:29
- */
+
 class student
 {
     private $id;
