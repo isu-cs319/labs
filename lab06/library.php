@@ -2,7 +2,7 @@
 require_once 'DBController.php';
 require_once 'book.php';
 require_once 'shelf.php';
-
+//error_reporting(E_ERROR | E_PARSE);
 
 // Fetch POST data
 $action = $_POST["action"];
@@ -23,7 +23,10 @@ elseif($action == "addBook"){
     $shelf_id = $lib->shelfNameToID($shelf_name);
     $book_title = $_POST["title"];
     $author = $_POST["author"];
-    $lib->registerBook($shelf_id,$book_id["COUNT(*)"],$book_title,$author);
+    $lib->registerBook($shelf_id,$book_id[0][0],$book_title,$author);
+}
+elseif($action == "viewLibrary"){
+    $lib->viewLibrary();
 }
 elseif($action == "removeBook"){
     $book_id = $_POST["id"];
@@ -82,23 +85,52 @@ class library
         }
     }
 
+    function viewLibrary(){
+        $library = array();
+        $num_rows = 0;
+        // Calculate number of rows necessary
+        for ($i=0; $i<4; $i++){
+            $sql = "SELECT books.BookTitle,books.Author,books.Availability,books.BookId,shelves.ShelfId FROM books
+ INNER JOIN shelves ON books.BookId = shelves.BookId WHERE ShelfId=" . $i.";";
+            $library[$i] = $this->db_handle->run($sql);
+            $num_rows = max($num_rows,count($library[$i]));
+        }
+        for ($i=0; $i<$num_rows; $i++){
+            echo "<tr>";
+            foreach ($library as $lib){
+                $b = $lib[$i];
+                if ($b != null){
+                    echo "<td value='" . $b["BookId"]."' onclick='viewDetails(this.value);'>" .$b["BookTitle"]. "</td>";
+                }
+                else{
+                    echo "<td></td>";
+                }
+            }
+            echo "</tr>";
+        }
+    }
+
     function viewShelf($shelf_id){
-        if ($shelf_id != "Art" && $shelf_id != "Science" && $shelf_id != "Literature" && $shelf_id != "Sport"){
+       /* if ($shelf_id != "Art" && $shelf_id != "Science" && $shelf_id != "Literature" && $shelf_id != "Sport"){
             error_log("Invalid shelf id " . (string)($shelf_id));
             echo "Invalid shelf id " . (string)($shelf_id);
-        }
+        }*/
+       if ($shelf_id != "0" && $shelf_id != "1" && $shelf_id != "2" && $shelf_id != "3"){
+           error_log("Invalid shelf id " . (string)($shelf_id));
+           echo "Invalid shelf id " . (string)($shelf_id);
+       }
         else{
-            $sql = "SELECT BookId FROM shelves WHERE ShelfName='%s'";
+            $sql = "SELECT BookId FROM shelves WHERE ShelfId=%d";
             $sql = sprintf($sql,$shelf_id);
             $book_ids = $this->db_handle->run($sql);
             $books = array();
             foreach ($book_ids as $id){
                 $sql = "SELECT * FROM books WHERE BookId=%d;";
-                $sql = sprintf($sql,$id);
-                array_push($books,$this->db_handle->run($sql));
+                $sql = sprintf($sql,$id["BookId"]);
+                $book = $this->db_handle->run($sql);
+                array_push($books,$book);
+                echo "<td value='" . $id["BookId"]."' onclick='viewDetails(this.value);'>" .$book["BookTitle"]. "</td>";
             }
-            // TODO: Print an actual table
-            echo "<td>" . $books[0]["BookTitle"] . "</td>";
         }
     }
 }

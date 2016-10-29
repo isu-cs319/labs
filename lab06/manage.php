@@ -49,7 +49,7 @@ else{
         <th>Shelf Sport</th>
     </tr>
     </thead>
-    <tbody>
+    <tbody id="library-body">
 
     </tbody>
 </table>
@@ -92,6 +92,7 @@ else{
         var title = $("#new-title").val();
         var shelf = $("#new-shelf").val();
         var author = $("#new-author").val();
+        console.log(title);
         $.ajax({
             url: "library.php",
             type: "POST",
@@ -141,10 +142,11 @@ else{
 
     function refreshTable(){
         var tbody = document.getElementById("library").tBodies[0];
-        var numShelves = $("#library > thead > tr:first > th").length;
-        console.log(numShelves);
+        /*var numShelves = $("#library > thead > tr:first > th").length;
+        var numRows = tbody.rows.length;
         var i;
         for (i=0; i<numShelves;i++){
+            console.log("Fetching Shelf: " + i);
             $.ajax({
                 url: "library.php",
                 type: "POST",
@@ -154,12 +156,21 @@ else{
                 },
                 success: function(result){
                     console.log(result);
-                    $("#library").html(result);
+                    tbody.innerHTML = result;
+                    //tbody.rows[i].html += result;
                 }});
-        }
-
+        }*/
+        $.ajax({
+            url: "library.php",
+            type: "POST",
+            data:{
+                "action":"viewLibrary"
+            },
+            success: function(result){
+                console.log(result);
+                tbody.innerHTML = result;
+            }});
     }
-
 </script>
 </body>
 </html>

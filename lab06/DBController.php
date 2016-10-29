@@ -28,8 +28,9 @@ class DBController {
     }
 
     function run($query) {
-        echo $query;
-        return mysqli_query($this->conn, $query)->fetch_assoc();
+        $results = mysqli_query($this->conn, $query);
+        if ($results->num_rows > 0)
+            return mysqli_query($this->conn, $query)->fetch_all(MYSQLI_BOTH);
         /*$result = $this->conn->query($query);
         while($row=$result->fetch_assoc()) {
             $resultset[] = $row;
