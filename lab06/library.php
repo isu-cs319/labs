@@ -3,9 +3,33 @@ require_once 'DBController.php';
 require_once 'book.php';
 require_once 'shelf.php';
 
+// Fetch POST data
+$action = $_POST["action"];
+$lib = new library();
+if ($action == "viewShelf"){
+    $shelf_id = $_POST["shelf_id"];
+    $lib->viewShelf($shelf_id);
+}
+elseif ($action == "viewDetails"){
+    $book_id = $_POST["id"];
+    $lib->viewDetails($book_id);
+}
+elseif($action == "addBook"){
+    $book_id = $lib->db_handle->run("SELECT COUNT(*) from books");
+    $shelf_name = $_POST["shelf_name"];
+    $shelf_id = $book_id;  // What is the point of shelf-ids? All names unique... TODO: Implement these?
+    $book_title = $_POST["title"];
+    $author = $_POST["author"];
+    $lib->registerBook($shelf_id,$book_id,$book_title,$author);
+}
+elseif($action == "removeBook"){
+    $book_id = $_POST["id"];
+    $lib->releaseBook($book_id);
+}
+
 class library
 {
-    private $db_handle;
+    public $db_handle;
     private $shelf_mgr;
     private $book_mgr;
 
@@ -29,17 +53,25 @@ class library
         $sql = "SELECT books.BookTitle,books.Author,books.Availability,shelves.ShelfName
         FROM books WHERE books.BookId='%s' INNER JOIN shelves ON books.BookId = shelves.BookId;";
         $sql = sprintf($sql,$book_id);
-        $this->db_handle->run($sql);
+        $details = $this->db_handle->run($sql);
+        echo "<table><thead><th>Title</th><th>Author</th><th>Availability</th><th>Shelf</th></thead>";
+        echo "<tbody>";
+        foreach ($details as $d){
+            echo "<td>" . $d["BookTitle"] . "</td>";
+            echo "<td>" . $d["Author"] . "</td>";
+            echo "<td>" . $d["Availability"] . "</td>";
+            echo "<td>" . $d["Shelf"] . "</td>";
+        }
+        echo "</tbody></table>";
     }
 
     function viewShelf($shelf_id){
-        if ($shelf_id > 3){
+        if ($shelf_id != "Art" && $shelf_id != "Science" && $shelf_id != "Literature" && $shelf_id != "Sport"){
             error_log("Invalid shelf id " . (string)($shelf_id));
             echo "Invalid shelf id " . (string)($shelf_id);
-            return -1;
         }
         else{
-            $sql = "SELECT BookId FROM shelves WHERE ShelfId=%d;";
+            $sql = "SELECT BookId FROM shelves WHERE ShelfName='%s'";
             $sql = sprintf($sql,$shelf_id);
             $book_ids = $this->db_handle->run($sql);
             $books = array();
@@ -48,7 +80,8 @@ class library
                 $sql = sprintf($sql,$id);
                 array_push($books,$this->db_handle->run($sql));
             }
-            return $books;
+            // TODO: Print an actual table
+            echo "<td>" . $books[0]["BookTitle"] . "</td>";
         }
     }
 }
