@@ -20,7 +20,7 @@ class shelf
         $sql = sprintf($sql, $shelf_id);
         $count = $this->db_handle->run($sql);
 
-        if ($count["count"] > 20){
+        if ($count["COUNT(*)"] > 20){
             error_log("Too many books in Shelf");
             echo "Too many books in Shelf";
             return;

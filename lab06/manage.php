@@ -45,8 +45,8 @@ else{
     <tr>
         <th>Shelf Art</th>
         <th>Shelf Science</th>
-        <th>Shelf Sport</th>
         <th>Shelf Literature</th>
+        <th>Shelf Sport</th>
     </tr>
     </thead>
     <tbody>
@@ -117,6 +117,7 @@ else{
             },
             success: function(result){
                 console.log(result);
+                $("body").html(result);
             }});
     }
 
@@ -140,7 +141,8 @@ else{
 
     function refreshTable(){
         var tbody = document.getElementById("library").tBodies[0];
-        var numShelves = tbody.cols.length;
+        var numShelves = $("#library > thead > tr:first > th").length;
+        console.log(numShelves);
         var i;
         for (i=0; i<numShelves;i++){
             $.ajax({

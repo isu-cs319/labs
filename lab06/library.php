@@ -3,9 +3,12 @@ require_once 'DBController.php';
 require_once 'book.php';
 require_once 'shelf.php';
 
+
 // Fetch POST data
 $action = $_POST["action"];
 $lib = new library();
+
+// Cases
 if ($action == "viewShelf"){
     $shelf_id = $_POST["shelf_id"];
     $lib->viewShelf($shelf_id);
@@ -15,12 +18,12 @@ elseif ($action == "viewDetails"){
     $lib->viewDetails($book_id);
 }
 elseif($action == "addBook"){
-    $book_id = $lib->db_handle->run("SELECT COUNT(*) from books");
+    $book_id = $lib->db_handle->run("SELECT COUNT(*) from books;");
     $shelf_name = $_POST["shelf_name"];
-    $shelf_id = $book_id;  // What is the point of shelf-ids? All names unique... TODO: Implement these?
+    $shelf_id = $lib->shelfNameToID($shelf_name);
     $book_title = $_POST["title"];
     $author = $_POST["author"];
-    $lib->registerBook($shelf_id,$book_id,$book_title,$author);
+    $lib->registerBook($shelf_id,$book_id["COUNT(*)"],$book_title,$author);
 }
 elseif($action == "removeBook"){
     $book_id = $_POST["id"];
@@ -57,12 +60,26 @@ class library
         echo "<table><thead><th>Title</th><th>Author</th><th>Availability</th><th>Shelf</th></thead>";
         echo "<tbody>";
         foreach ($details as $d){
-            echo "<td>" . $d["BookTitle"] . "</td>";
+            echo "<tr><td>" . $d["BookTitle"] . "</td>";
             echo "<td>" . $d["Author"] . "</td>";
             echo "<td>" . $d["Availability"] . "</td>";
-            echo "<td>" . $d["Shelf"] . "</td>";
+            echo "<td>" . $d["Shelf"] . "</td></tr>";
         }
         echo "</tbody></table>";
+    }
+    function shelfNameToID($name){
+        switch ($name){
+            case "Art":
+                return 0;
+            case "Science":
+                return 1;
+            case "Literature":
+                return 2;
+            case "Sport":
+                return 3;
+            default:
+                return -1;
+        }
     }
 
     function viewShelf($shelf_id){
