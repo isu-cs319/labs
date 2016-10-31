@@ -191,12 +191,14 @@
      
      $db_handle = new DBController();
      $password = md5($password);
-     $sql = "INSERT INTO users (userName, Password, Email, Phone, Librarian, FirstName, LastName)
-	     VALUES ($username, $password, $email, $phone, $librarian, $firstname, $lastname);";
+     $sql = "INSERT INTO users (userName,Password,Email,Phone,Librarian,FirstName,LastName) 
+	     VALUES ('%s','%s','%s',%d,%d,'%s','%s');";
+     $sql = sprintf($sql,$username,$password,$email,$phone,$librarian,$firstname,$lastname);
+     //echo $sql;
      $db_handle->run($sql);
      
      echo "<br> <br> Thanks for signing up. Redirecting to login page...";
-     //echo "<meta http-equiv='refresh' content='.5;url=login.html'>";
+     echo "<meta http-equiv='refresh' content='.5;url=login.html'>";
      }
      ?>
   
