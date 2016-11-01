@@ -122,6 +122,7 @@ else{
 
     function viewDetails(id){
         console.log(id);
+        $("#details-body").html("Loading...");
         $.ajax({
             url: "library.php",
             type: "POST",

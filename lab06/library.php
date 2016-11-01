@@ -57,16 +57,17 @@ class library
 
     function viewDetails($book_id){
         // TODO: Get only details from one book, not all books.
-        $sql = "SELECT books.BookTitle,books.Author,books.Availability,shelves.ShelfName
+        $sql = "SELECT books.BookId,books.BookTitle,books.Author,books.Availability,shelves.ShelfName
         FROM books INNER JOIN shelves ON books.BookId = shelves.BookId WHERE books.BookId=%d;";
         $sql = sprintf($sql,$book_id);
         $details = $this->db_handle->run($sql);
-        echo "<table><thead><th>Title</th><th>Author</th><th>Availability</th><th>Shelf</th></thead>";
+        echo "<table><thead><th>Title</th><th>Author</th><th>Availability</th><th>ID</th><th>Shelf</th></thead>";
         echo "<tbody>";
         foreach ($details as $d){
             echo "<tr><td>" . $d["BookTitle"] . "</td>";
             echo "<td>" . $d["Author"] . "</td>";
             echo "<td>" . $d["Availability"] . "</td>";
+            echo "<td>" . $d["BookId"] . "</td>";
             echo "<td>" . $d["ShelfName"] . "</td></tr>";
         }
         echo "</tbody></table>";
