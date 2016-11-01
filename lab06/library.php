@@ -2,6 +2,7 @@
 require_once 'DBController.php';
 require_once 'book.php';
 require_once 'shelf.php';
+require_once 'student.php';
 //error_reporting(E_ERROR | E_PARSE);
 
 session_start();
@@ -35,6 +36,18 @@ elseif($action == "removeBook"){
     $book_id = $_POST["id"];
     $lib->releaseBook($book_id);
 }
+elseif($action == "history"){
+    $book_id = $_POST["id"];
+    $lib->borrowHistory($book_id);
+}
+elseif($action == "borrowBook") {
+    $book_id = $_POST["id"];
+    $lib->borrowBook($book_id);
+}
+elseif($action == "returnBook") {
+    $book_id = $_POST["id"];
+    $lib->returnBook($book_id);
+}
 
 class library
 {
@@ -58,6 +71,40 @@ class library
         $this->book_mgr->deleteBook($book_id);
     }
 
+    function borrowHistory($book_id) {
+        $sql = "SELECT * FROM loanHistory WHERE BookId=%d;";
+        $sql = sprintf($sql, $book_id);
+        $loanhistory = $this->db_handle->run($sql);
+	var_dump($loanhistory);
+    }
+
+    function borrowBook($book_id) {
+    // Check if book is already borrowed
+        $sql = "SELECT Availability FROM books WHERE bookId=%d;";
+        $sql = sprintf($sql, $book_id);
+        $availability = $this->db_handle->run($sql);
+	var_dump($availability);
+        if ($availability["Availability"] != 0){
+            // Book is available, take it out
+            $sql = "UPDATE books SET Availability=0 WHERE bookId='%s';";
+            $sql = sprintf($sql, $book_id);
+            $this->db_handle->run($sql);
+            // Update Loan History
+            $sql = "INSERT INTO loanHistory (UserName,BookId,DueDate,ReturnedDate) VALUES ('%s',%d,now(),'');";
+            $sql = sprintf($sql, $this->id,$book_id);
+            $this->db_handle->run($sql);
+        }
+        else{
+            error_log("Book is not available!");
+            echo "Book is not available!";
+        }
+        
+    }
+
+    function returnBook($book_id) {
+    	     
+    }
+
     function viewDetails($book_id){
         // TODO: Get only details from one book, not all books.
         $sql = "SELECT books.BookId,books.BookTitle,books.Author,books.Availability,shelves.ShelfName
@@ -74,15 +121,6 @@ class library
             echo "<td>" . $d["ShelfName"] . "</td></tr>";
         }
         echo "</tbody></table>";
-	if ($_SESSION["username"] == "admin") {
-	   echo '<style type="text/css">
-           	.studentbtn {
-           	  display: none;
-        	}
-        	</style>';
-	}
-	else {
-	}
     }
 
     function shelfNameToID($name){
@@ -115,7 +153,8 @@ class library
             foreach ($library as $lib){
                 $b = $lib[$i];
                 if ($b != null){
-                    echo "<td><div data-toggle='modal' data-target='#details-modal' value='" . $b["BookId"]."' onclick='viewDetails(" . $b["BookId"] . ");'>" .$b["BookTitle"]. "</div></td>";
+		   $display = "(" . $b["BookId"] . ") " . $b["BookTitle"];
+                    echo "<td><div data-toggle='modal' data-target='#details-modal' value='" . $b["BookId"]."' onclick='viewDetails(" . $b["BookId"] . ");'>" .$display. "</div></td>";
                 }
                 else{
                     echo "<td></td>";

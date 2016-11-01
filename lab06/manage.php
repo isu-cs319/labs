@@ -34,6 +34,11 @@ table, th, td {
   <?php
 if ($_SESSION["username"] == "admin"){
 // Admin buttons
+echo '<style type="text/css">
+        .studentbtn {
+            display: none;
+        }
+        </style>';
 
 }
 else{
@@ -61,12 +66,15 @@ echo '<style type="text/css">
     </tbody>
 </table>
 <div>
+    <button type="button" class="btn btn-info btn-lg" onclick="history();">Borrow History</button> <br>
     <button type="button" class="btn btn-info btn-lg" onclick="removeBook();">Remove Book</button>
+    <button type="button" class="studentbtn" onclick="borrowBook();">Borrow Book</button>
+    <button type="button" class="studentbtn" onclick="returnBook();">Return Book</button>
 </div>
 <div>
     <!-- Trigger the add post with a button -->
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Book</button>
-
+    
     <!-- Modal -->
     <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -99,8 +107,7 @@ echo '<style type="text/css">
                 </div>
                 <div class="modal-body" id="details-body">
                 </div>
-		<button type="button" class="studentbtn">Borrow Book</button>
-		<button type="button" class="studentbtn">Return Book</button> <br> <br>
+		<br> <br>
             </div>
         </div>
     </div>
@@ -157,6 +164,60 @@ echo '<style type="text/css">
                 },
                 success: function (result) {
                     refreshTable();
+                }
+            });
+        }
+    }
+
+    function borrowBook() {
+        var id = prompt("Enter Book ID to Borrow:");
+        if (id != null) {
+            $.ajax({
+                url: "library.php",
+                type: "POST",
+                data: {
+                    "action": "borrowBook",
+                    "id": id
+                },
+                success: function (result) {
+		    refreshTable();
+                    //$(".login-box").css({"color": "red"});
+                }
+            });
+        }
+    }
+
+    function returnBook() {
+        var id = prompt("Enter Book ID to Return:");
+        if (id != null) {
+            $.ajax({
+                url: "library.php",
+                type: "POST",
+                data: {
+                    "action": "returnBook",
+                    "id": id
+                },
+                success: function (result) {
+		    refreshTable();
+                    //$(".login-box").css({"color": "red"});
+                }
+            });
+        }
+    }
+
+    function history() {
+        var id = prompt("Enter book ID to view history");
+        if (id != null) {
+            $.ajax({
+                url: "library.php",
+                type: "POST",
+                data: {
+                    "action": "history",
+                    "id": id
+                },
+                success: function (result) {
+                    refreshTable();
+                    //$(".login-box").css({"color": "red"});
                 }
             });
         }
