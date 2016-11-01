@@ -3,7 +3,7 @@ require_once 'DBController.php';
 require_once 'library.php';
 require_once 'student.php';
 // Start the session
-session_start();
+//session_start();
 
 $std = new student($_SESSION["username"]);
 ?>
@@ -99,6 +99,8 @@ echo '<style type="text/css">
                 </div>
                 <div class="modal-body" id="details-body">
                 </div>
+		<button type="button" class="studentbtn">Borrow Book</button>
+		<button type="button" class="studentbtn">Return Book</button> <br> <br>
             </div>
         </div>
     </div>

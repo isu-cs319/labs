@@ -34,18 +34,11 @@ $db_handle = new DBController();
 <?php
 
 if (isset($_POST["username"]) && isset($_POST["password"])) {
-//$_SESSION["username"] = $_POST["username"];
 $givenUsername = $_POST["username"];
 $givenPassword = md5($_POST["password"]);
 
-//echo $givenUsername;
-//echo "<br>";
-//echo $givenPassword;
-//echo "<br>";
-
 $sql = "SELECT userName,Password FROM users WHERE userName='%s';";
 $sql = sprintf($sql, $givenUsername);
-//echo $sql;
 $found = $db_handle->run($sql);
 
 if (($found[0]["userName"] == $givenUsername && $found[0]["Password"] == $givenPassword) ||

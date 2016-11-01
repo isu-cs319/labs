@@ -4,6 +4,9 @@ require_once 'book.php';
 require_once 'shelf.php';
 //error_reporting(E_ERROR | E_PARSE);
 
+session_start();
+//var_dump($_SESSION);
+
 // Fetch POST data
 $action = $_POST["action"];
 $lib = new library();
@@ -71,6 +74,15 @@ class library
             echo "<td>" . $d["ShelfName"] . "</td></tr>";
         }
         echo "</tbody></table>";
+	if ($_SESSION["username"] == "admin") {
+	   echo '<style type="text/css">
+           	.studentbtn {
+           	  display: none;
+        	}
+        	</style>';
+	}
+	else {
+	}
     }
 
     function shelfNameToID($name){
