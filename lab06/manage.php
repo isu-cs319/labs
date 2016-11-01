@@ -32,12 +32,19 @@ table, th, td {
 <div class="login-box"> Hello, <?php echo $_SESSION["username"]; ?>. <a href="logout.php">Click to logout</a> </div>
 <br>
   <?php
-if (strtolower($_SESSION["username"]) == "admin"){
+if ($_SESSION["username"] == "admin"){
 // Admin buttons
 
 }
 else{
 // Student buttons
+echo '<style type="text/css">
+        .btn {
+            display: none;
+        }
+        </style>';
+
+
 }
 ?>
 <table id="library" border="1">
