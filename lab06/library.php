@@ -54,10 +54,11 @@ class library
         $this->shelf_mgr->deleteBook($book_id);
         $this->book_mgr->deleteBook($book_id);
     }
+
     function viewDetails($book_id){
         // TODO: Get only details from one book, not all books.
         $sql = "SELECT books.BookTitle,books.Author,books.Availability,shelves.ShelfName
-        FROM books WHERE books.BookId='%s' INNER JOIN shelves ON books.BookId = shelves.BookId;";
+        FROM books INNER JOIN shelves ON books.BookId = shelves.BookId WHERE books.BookId=%d;";
         $sql = sprintf($sql,$book_id);
         $details = $this->db_handle->run($sql);
         echo "<table><thead><th>Title</th><th>Author</th><th>Availability</th><th>Shelf</th></thead>";
@@ -66,10 +67,11 @@ class library
             echo "<tr><td>" . $d["BookTitle"] . "</td>";
             echo "<td>" . $d["Author"] . "</td>";
             echo "<td>" . $d["Availability"] . "</td>";
-            echo "<td>" . $d["Shelf"] . "</td></tr>";
+            echo "<td>" . $d["ShelfName"] . "</td></tr>";
         }
         echo "</tbody></table>";
     }
+
     function shelfNameToID($name){
         switch ($name){
             case "Art":
@@ -100,7 +102,7 @@ class library
             foreach ($library as $lib){
                 $b = $lib[$i];
                 if ($b != null){
-                    echo "<td value='" . $b["BookId"]."' onclick='viewDetails(this.value);'>" .$b["BookTitle"]. "</td>";
+                    echo "<td><div data-toggle='modal' data-target='#details-modal' value='" . $b["BookId"]."' onclick='viewDetails(" . $b["BookId"] . ");'>" .$b["BookTitle"]. "</div></td>";
                 }
                 else{
                     echo "<td></td>";
@@ -109,12 +111,8 @@ class library
             echo "</tr>";
         }
     }
-
+    /* DEPRECATED
     function viewShelf($shelf_id){
-       /* if ($shelf_id != "Art" && $shelf_id != "Science" && $shelf_id != "Literature" && $shelf_id != "Sport"){
-            error_log("Invalid shelf id " . (string)($shelf_id));
-            echo "Invalid shelf id " . (string)($shelf_id);
-        }*/
        if ($shelf_id != "0" && $shelf_id != "1" && $shelf_id != "2" && $shelf_id != "3"){
            error_log("Invalid shelf id " . (string)($shelf_id));
            echo "Invalid shelf id " . (string)($shelf_id);
@@ -132,5 +130,5 @@ class library
                 echo "<td value='" . $id["BookId"]."' onclick='viewDetails(this.value);'>" .$book["BookTitle"]. "</td>";
             }
         }
-    }
+    }*/
 }

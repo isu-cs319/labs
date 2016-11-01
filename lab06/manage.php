@@ -81,6 +81,20 @@ else{
 
         </div>
     </div>
+    <!-- Modal -->
+    <div id="details-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Viewing Details</h4>
+                </div>
+                <div class="modal-body" id="details-body">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
@@ -92,7 +106,6 @@ else{
         var title = $("#new-title").val();
         var shelf = $("#new-shelf").val();
         var author = $("#new-author").val();
-        console.log(title);
         $.ajax({
             url: "library.php",
             type: "POST",
@@ -103,12 +116,12 @@ else{
                 "title":title
             },
             success: function(result){
-                console.log(result);
                 refreshTable();
             }});
     }
 
     function viewDetails(id){
+        console.log(id);
         $.ajax({
             url: "library.php",
             type: "POST",
@@ -118,7 +131,7 @@ else{
             },
             success: function(result){
                 console.log(result);
-                $("body").html(result);
+                $("#details-body").html(result);
             }});
     }
 
@@ -133,7 +146,6 @@ else{
                     "id": id
                 },
                 success: function (result) {
-                    console.log(result);
                     refreshTable();
                 }
             });
@@ -167,7 +179,6 @@ else{
                 "action":"viewLibrary"
             },
             success: function(result){
-                console.log(result);
                 tbody.innerHTML = result;
             }});
     }
