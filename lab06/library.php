@@ -6,11 +6,11 @@ require_once 'student.php';
 //error_reporting(E_ERROR | E_PARSE);
 
 session_start();
-//var_dump($_SESSION);
-
+$userId = $_SESSION["username"];
 // Fetch POST data
 $action = $_POST["action"];
 $lib = new library();
+$std = new student($userId);
 
 // Cases
 if ($action == "viewShelf"){
@@ -37,16 +37,16 @@ elseif($action == "removeBook"){
     $lib->releaseBook($book_id);
 }
 elseif($action == "history"){
-    $book_id = $_POST["id"];
-    $lib->borrowHistory($book_id);
+    $username = $_POST["id"];
+    $std->borrowHistory($username);
 }
 elseif($action == "borrowBook") {
     $book_id = $_POST["id"];
-    $lib->borrowBook($book_id);
+    $std->borrow($book_id);
 }
 elseif($action == "returnBook") {
     $book_id = $_POST["id"];
-    $lib->returnBook($book_id);
+    $std->returnBook($book_id);
 }
 
 class library
@@ -69,40 +69,6 @@ class library
     function releaseBook($book_id){
         $this->shelf_mgr->deleteBook($book_id);
         $this->book_mgr->deleteBook($book_id);
-    }
-
-    function borrowHistory($book_id) {
-        $sql = "SELECT * FROM loanHistory WHERE BookId=%d;";
-        $sql = sprintf($sql, $book_id);
-        $loanhistory = $this->db_handle->run($sql);
-	var_dump($loanhistory);
-    }
-
-    function borrowBook($book_id) {
-    // Check if book is already borrowed
-        $sql = "SELECT Availability FROM books WHERE bookId=%d;";
-        $sql = sprintf($sql, $book_id);
-        $availability = $this->db_handle->run($sql);
-	var_dump($availability);
-        if ($availability["Availability"] != 0){
-            // Book is available, take it out
-            $sql = "UPDATE books SET Availability=0 WHERE bookId='%s';";
-            $sql = sprintf($sql, $book_id);
-            $this->db_handle->run($sql);
-            // Update Loan History
-            $sql = "INSERT INTO loanHistory (UserName,BookId,DueDate,ReturnedDate) VALUES ('%s',%d,now(),'');";
-            $sql = sprintf($sql, $this->id,$book_id);
-            $this->db_handle->run($sql);
-        }
-        else{
-            error_log("Book is not available!");
-            echo "Book is not available!";
-        }
-        
-    }
-
-    function returnBook($book_id) {
-    	     
     }
 
     function viewDetails($book_id){
@@ -163,24 +129,4 @@ class library
             echo "</tr>";
         }
     }
-    /* DEPRECATED
-    function viewShelf($shelf_id){
-       if ($shelf_id != "0" && $shelf_id != "1" && $shelf_id != "2" && $shelf_id != "3"){
-           error_log("Invalid shelf id " . (string)($shelf_id));
-           echo "Invalid shelf id " . (string)($shelf_id);
-       }
-        else{
-            $sql = "SELECT BookId FROM shelves WHERE ShelfId=%d";
-            $sql = sprintf($sql,$shelf_id);
-            $book_ids = $this->db_handle->run($sql);
-            $books = array();
-            foreach ($book_ids as $id){
-                $sql = "SELECT * FROM books WHERE BookId=%d;";
-                $sql = sprintf($sql,$id["BookId"]);
-                $book = $this->db_handle->run($sql);
-                array_push($books,$book);
-                echo "<td value='" . $id["BookId"]."' onclick='viewDetails(this.value);'>" .$book["BookTitle"]. "</td>";
-            }
-        }
-    }*/
 }

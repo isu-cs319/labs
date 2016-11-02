@@ -3,9 +3,8 @@ require_once 'DBController.php';
 require_once 'library.php';
 require_once 'student.php';
 // Start the session
-//session_start();
-
-$std = new student($_SESSION["username"]);
+session_start();
+$_SESSION["username"] = "admin";
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +65,7 @@ echo '<style type="text/css">
     </tbody>
 </table>
 <div>
-    <button type="button" class="btn btn-info btn-lg" onclick="history();">Borrow History</button> <br>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#history-modal" onclick="history();">View History of User</button> <br>
     <button type="button" class="btn btn-info btn-lg" onclick="removeBook();">Remove Book</button>
     <button type="button" class="studentbtn" onclick="borrowBook();">Borrow Book</button>
     <button type="button" class="studentbtn" onclick="returnBook();">Return Book</button>
@@ -96,7 +95,7 @@ echo '<style type="text/css">
 
         </div>
     </div>
-    <!-- Modal -->
+    <!-- Details Modal -->
     <div id="details-modal" class="modal fade" role="dialog">
         <div class="modal-dialog">
             <!-- Modal content-->
@@ -108,6 +107,21 @@ echo '<style type="text/css">
                 <div class="modal-body" id="details-body">
                 </div>
 		<br> <br>
+            </div>
+        </div>
+    </div>
+    <!-- History Modal -->
+    <div id="history-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Viewing History</h4>
+                </div>
+                <div class="modal-body" id="history-body">
+                </div>
+                <br> <br>
             </div>
         </div>
     </div>
@@ -180,7 +194,8 @@ echo '<style type="text/css">
                     "id": id
                 },
                 success: function (result) {
-		    refreshTable();
+		            refreshTable();
+                    alert(result);
                     //$(".login-box").css({"color": "red"});
                 }
             });
@@ -198,7 +213,8 @@ echo '<style type="text/css">
                     "id": id
                 },
                 success: function (result) {
-		    refreshTable();
+		            refreshTable();
+                    alert(result);
                     //$(".login-box").css({"color": "red"});
                 }
             });
@@ -206,7 +222,8 @@ echo '<style type="text/css">
     }
 
     function history() {
-        var id = prompt("Enter book ID to view history");
+        var id = prompt("Enter Username to view history:");
+        $("#history-body").html("Loading...");
         if (id != null) {
             $.ajax({
                 url: "library.php",
@@ -216,6 +233,7 @@ echo '<style type="text/css">
                     "id": id
                 },
                 success: function (result) {
+                    $("#history-body").html(result);
                     refreshTable();
                     //$(".login-box").css({"color": "red"});
                 }
