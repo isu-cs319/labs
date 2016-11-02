@@ -1,0 +1,9 @@
+book.php - David Schott
+library.php - David Schott
+login.html - Emily Anderson
+login.php - Emily Anderson
+logout.php - Emily Anderson
+manage.php - Both
+shelf.php - David Schott
+signup.php - Emily Anderson
+student.php - David Schott
