@@ -4,7 +4,7 @@ require_once 'library.php';
 require_once 'student.php';
 // Start the session
 session_start();
-$_SESSION["username"] = "admin";
+$_SESSION["username"] = "david";
 ?>
 
 <!DOCTYPE html>
