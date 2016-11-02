@@ -4,14 +4,12 @@ require_once 'book.php';
 require_once 'shelf.php';
 require_once 'student.php';
 //error_reporting(E_ERROR | E_PARSE);
-
 session_start();
 $userId = $_SESSION["username"];
 // Fetch POST data
 $action = $_POST["action"];
 $lib = new library();
 $std = new student($userId);
-
 // Cases
 if ($action == "viewShelf"){
     $shelf_id = $_POST["shelf_id"];
@@ -48,29 +46,24 @@ elseif($action == "returnBook") {
     $book_id = $_POST["id"];
     $std->returnBook($book_id);
 }
-
 class library
 {
     public $db_handle;
     private $shelf_mgr;
     private $book_mgr;
-
     function __construct() {
         $this->db_handle = new DBController();
         $this->shelf_mgr = new shelf();
         $this->book_mgr = new book();
     }
-
     function registerBook($shelf_id,$book_id,$title,$author){
         $this->book_mgr->addBook($book_id,$title,$author);
         $this->shelf_mgr->addBook($shelf_id,$book_id);
     }
-
     function releaseBook($book_id){
         $this->shelf_mgr->deleteBook($book_id);
         $this->book_mgr->deleteBook($book_id);
     }
-
     function viewDetails($book_id){
         // TODO: Get only details from one book, not all books.
         $sql = "SELECT books.BookId,books.BookTitle,books.Author,books.Availability,shelves.ShelfName
@@ -88,7 +81,6 @@ class library
         }
         echo "</tbody></table>";
     }
-
     function shelfNameToID($name){
         switch ($name){
             case "Art":
@@ -103,7 +95,6 @@ class library
                 return -1;
         }
     }
-
     function viewLibrary(){
         $library = array();
         $num_rows = 0;

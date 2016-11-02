@@ -3,8 +3,8 @@ require_once 'DBController.php';
 require_once 'library.php';
 require_once 'student.php';
 // Start the session
-session_start();
-$_SESSION["username"] = "david";
+//session_start();
+//$_SESSION["username"] = "david";
 ?>
 
 <!DOCTYPE html>
@@ -31,14 +31,14 @@ table, th, td {
 <div class="login-box"> Hello, <?php echo $_SESSION["username"]; ?>. <a href="logout.php">Click to logout</a> </div>
 <br>
   <?php
-if ($_SESSION["username"] == "admin"){
+//if ($_SESSION["username"] == "admin"){
+if ($_SESSION["librarian"] == 1) {
 // Admin buttons
 echo '<style type="text/css">
         .studentbtn {
             display: none;
         }
         </style>';
-
 }
 else{
 // Student buttons
@@ -47,8 +47,6 @@ echo '<style type="text/css">
             display: none;
         }
         </style>';
-
-
 }
 ?>
 <table id="library" border="1">
@@ -130,8 +128,6 @@ echo '<style type="text/css">
     $(document).ready(function(){
        refreshTable();
     });
-
-
     function addBook(){
         var title = $("#new-title").val();
         var shelf = $("#new-shelf").val();
@@ -149,7 +145,6 @@ echo '<style type="text/css">
                 refreshTable();
             }});
     }
-
     function viewDetails(id){
         console.log(id);
         $("#details-body").html("Loading...");
@@ -165,7 +160,6 @@ echo '<style type="text/css">
                 $("#details-body").html(result);
             }});
     }
-
     function removeBook() {
         var id = prompt("Enter Book ID");
         if (id != null) {
@@ -182,7 +176,6 @@ echo '<style type="text/css">
             });
         }
     }
-
     function borrowBook() {
         var id = prompt("Enter Book ID to Borrow:");
         if (id != null) {
@@ -201,7 +194,6 @@ echo '<style type="text/css">
             });
         }
     }
-
     function returnBook() {
         var id = prompt("Enter Book ID to Return:");
         if (id != null) {
@@ -220,7 +212,6 @@ echo '<style type="text/css">
             });
         }
     }
-
     function history() {
         var id = prompt("Enter Username to view history:");
         $("#history-body").html("Loading...");
@@ -240,7 +231,6 @@ echo '<style type="text/css">
             });
         }
     }
-
     function refreshTable(){
         var tbody = document.getElementById("library").tBodies[0];
         /*var numShelves = $("#library > thead > tr:first > th").length;

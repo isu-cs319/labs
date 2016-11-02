@@ -8,7 +8,6 @@ class student
         $this->id = $userName;
         $this->db_handle = new DBController();
     }
-
     function borrowHistory($userName){
         $sql = "SELECT * FROM loanHistory WHERE UserName='%s';";
         $sql = sprintf($sql, $userName);
