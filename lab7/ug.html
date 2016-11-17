@@ -1,0 +1,44 @@
+<head>
+  <style>
+    .login {
+    display: none;
+    }
+    .content {
+    display: block;
+    }
+    <!--table, th, td {
+    border: 1px solid black;
+    }-->
+    table, th , td  {
+    border: 1px solid grey;
+    border-collapse: collapse;
+    padding: 5px;
+    }
+    table tr:nth-child(odd) {
+    background-color: #f1f1f1;
+    }
+    table tr:nth-child(even) {
+    background-color: #ffffff;
+    }
+    .logout {
+    text-align: right;
+    }
+  </style>
+</head>
+<p class="logout"> <a href="#/login"> Logout </a> </p>
+<h2> Welcome, {{name}} </h2>
+
+<table> 
+  <th> <h3>Literature</h3></th>
+  <th> <h3>Science</h3></th>
+  <th> <h3>Sport</h3></th>
+  <th> <h3>Art</h3></th>
+  <tr ng-if="$index%4==0" ng-repeat="book in books track by $index">
+    <td> {{books[$index].name}} </td>
+    <td> {{books[$index+1].name}} </td>
+    <td> {{books[$index+2].name}} </td>
+    <td> {{books[$index+3].name}} </td>
+  </tr>
+</table>
+<br>
+

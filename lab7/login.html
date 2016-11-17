@@ -1,0 +1,44 @@
+<html>
+  <head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular-route.js"></script>
+    <script src="app.js"></script>
+    <style>
+      .content {
+      display: none;
+      }
+    </style>
+  </head>
+  
+  <body>
+    <div  ng-app="myApp" ng-controller="loginController">
+      <div class="login">
+	<h2> Login </h2>
+	<p> Username: <input type="text" id="username" ng-model="username"/> </p>
+	<p> Password: <input type="password" id="password" ng-model="password"/> </p>
+	<p> <button type="submit" onclick="go_to_page()"> Login </button> </p>
+      </div>
+      <div class="content" id="page-content" style="margin: 30px; padding: 30px; border: 3px solid black;">
+	<div ng-view="" />
+      </div>
+    </div> <!-- end of myApp -->
+
+    <script>
+      function go_to_page() {
+      if (document.getElementById("username").value=="admin" && document.getElementById("password").value=="admin") {
+      window.location="#/admin";
+      }
+      else if (document.getElementById("username").value.charAt(0) == 'U') {
+      window.location="#/ug";
+      }
+      else {
+      alert("Invalid login credentials. Please try again.");
+      document.getElementById("username").value = "";
+      document.getElementById("password").value = "";
+      }
+      }
+    </script>
+    
+    
+  </body>
+</html>
