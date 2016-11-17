@@ -65,6 +65,11 @@ angular.module('myApp', ['ngRoute']) //ngRoute is an angular service
 		  "Borrowed By: " + $scope.books[index].borrowedBy + "\n" +
 		  "Presence: " + $scope.books[index].presence);
 	};
+	$scope.addNewBook = function(){
+		console.log($scope.newBook);
+		$scope.books.push($scope.newBook);
+	};
+
 	
     })
 
