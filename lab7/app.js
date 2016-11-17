@@ -54,7 +54,7 @@ angular.module('myApp', ['ngRoute']) //ngRoute is an angular service
 	$scope.name = "Admin";
 	$scope.clicked = function(index) {
 	    var ref = "";
-	    if ($scope.books[index].reference == 0) {
+	    if ($scope.books[index].reference == 1) {
 		ref = "Yes";
 	    }
 	    else {
@@ -69,6 +69,47 @@ angular.module('myApp', ['ngRoute']) //ngRoute is an angular service
     })
 
     .controller('ugController', function($scope) {
-	$scope.name = "Undergrad";
+	$scope.name = $scope.username;
+	$scope.borrowreturn = function(index, name) {
+	    //alert(index + " " + name + " " + $scope.name);
+	    if ($scope.books[index].borrowedBy == name) { // return
+		$scope.books[index].borrowedBy = "";
+		$scope.books[index].presence = 1;
+		alert("You have successfully returned " + $scope.books[index].name);
+		console.log(name + " returned " + $scope.books[index].name);
+	    }
+	    else { // borrow
+		var i=0, num=0, canborrow = 1;
+
+		if ($scope.books[index].reference == 1) {
+		    canborrow = 0;
+		    alert("Reference books can not be borrowed.");
+		}
+		else if ($scope.books[index].presence == 0) {
+		    canborrow = 0;
+		    alert("Book is unavailable.");
+		}
+		else {
+		    while (i<$scope.books.length && num<2) {
+			if ($scope.books[i].borrowedBy == name) {
+			    num++;
+			    if (num == 2) {
+				canborrow = 0;
+				alert("You have already borrowed 2 books. \n" +
+				      "Please return a book to borrow another.");
+			    }
+			}
+			i++;
+		    }
+		}
+		
+		if (canborrow==1) {
+		    $scope.books[index].borrowedBy = name;
+		    $scope.books[index].presence = 0;
+		    alert("You have successfully borrowed " + $scope.books[index].name);
+		    console.log(name + " borrowed " + $scope.books[index].name);
+		}
+	    }
+	};
     });
 	

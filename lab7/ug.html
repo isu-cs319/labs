@@ -34,10 +34,10 @@
   <th> <h3>Sport</h3></th>
   <th> <h3>Art</h3></th>
   <tr ng-if="$index%4==0" ng-repeat="book in books track by $index">
-    <td> {{books[$index].name}} </td>
-    <td> {{books[$index+1].name}} </td>
-    <td> {{books[$index+2].name}} </td>
-    <td> {{books[$index+3].name}} </td>
+    <td data-ng-click="borrowreturn($index, name)"> {{books[$index].name}} </td>
+    <td data-ng-click="borrowreturn($index+1, name)"> {{books[$index+1].name}} </td>
+    <td data-ng-click="borrowreturn($index+2, name)"> {{books[$index+2].name}} </td>
+    <td data-ng-click="borrowreturn($index+3, name)"> {{books[$index+3].name}} </td>
   </tr>
 </table>
 <br>
