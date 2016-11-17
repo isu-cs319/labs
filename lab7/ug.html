@@ -1,43 +1,44 @@
-<head>
-  <style>
-    .login {
-    display: none;
-    }
-    .content {
-    display: block;
-    }
-    <!--table, th, td {
-    border: 1px solid black;
-    }-->
-    table, th , td  {
-    border: 1px solid grey;
-    border-collapse: collapse;
-    padding: 5px;
-    }
-    table tr:nth-child(odd) {
-    background-color: #f1f1f1;
-    }
-    table tr:nth-child(even) {
-    background-color: #ffffff;
-    }
-  </style>
-</head>
-<p class="logout" style="text-align:right"> <a href="#/login"> Logout </a> </p>
-<h2> Welcome, {{name}} </h2>
-<p> Click on a book to borrow/return it. </p>
-<br>
-
-<table> 
-  <th> <h3>Literature</h3></th>
-  <th> <h3>Science</h3></th>
-  <th> <h3>Sport</h3></th>
-  <th> <h3>Art</h3></th>
-  <tr ng-if="$index%4==0" ng-repeat="book in books track by $index">
-    <td data-ng-click="borrowreturn($index, name)"> {{books[$index].name}} </td>
-    <td data-ng-click="borrowreturn($index+1, name)"> {{books[$index+1].name}} </td>
-    <td data-ng-click="borrowreturn($index+2, name)"> {{books[$index+2].name}} </td>
-    <td data-ng-click="borrowreturn($index+3, name)"> {{books[$index+3].name}} </td>
-  </tr>
-</table>
-<br>
-
+<html>
+  <head>
+    <style>
+      .login {
+      display: none;
+      }
+      .content {
+      display: block;
+      }
+      table, th , td  {
+      border: 1px solid grey;
+      border-collapse: collapse;
+      padding: 5px;
+      }
+      .red {
+      background-color: red;
+      }
+      .white {
+      background-color: white;
+      }
+    </style>
+  </head>
+  <body>
+    <p class="logout" style="text-align:right"> <a href="#/login"> Logout </a> </p>
+    <h2> Welcome, {{name}} </h2>
+    <p> Click on a book to borrow/return it. </p>
+    <br>
+    
+    <table> 
+      <th> <h3>Literature</h3></th>
+      <th> <h3>Science</h3></th>
+      <th> <h3>Sport</h3></th>
+      <th> <h3>Art</h3></th>
+      <tr ng-if="$index%4==0" ng-repeat="book in books track by $index">
+	<td data-ng-click="borrowreturn($index, name)" ng-class="{red:books[$index].presence==0, white:books[$index].presence==1}"> {{books[$index].name}} </td>
+	<td data-ng-click="borrowreturn($index+1, name)" ng-class="{red:books[$index+1].presence==0, white:books[$index+1].presence==1}"> {{books[$index+1].name}} </td>
+	<td data-ng-click="borrowreturn($index+2, name)" ng-class="{red:books[$index+2].presence==0, white:books[$index+2].presence==1}"> {{books[$index+2].name}} </td>
+	<td data-ng-click="borrowreturn($index+3, name)" ng-class="{red:books[$index+3].presence==0, white:books[$index+3].presence==1}"> {{books[$index+3].name}} </td>
+      </tr>
+    </table>
+    <br>
+    
+  </body>
+</html>
