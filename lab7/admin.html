@@ -20,14 +20,13 @@
     table tr:nth-child(even) {
     background-color: #ffffff;
     }
-    .logout {
-    text-align: right;
-    }
   </style>
 </head>
 <body>
-  <p class="logout"> <a href="#/login"> Logout </a> </p>
+  <p class="logout" style="text-align:right"> <a href="#/login"> Logout </a> </p>
   <h2> Welcome, {{name}} </h2>
+  <p> Click on a book to view its information. </p>
+  <br>
   
   <table> 
     <th> <h3>Literature</h3></th>
@@ -43,7 +42,7 @@
   </table>
   <br>
   <h3> New Book: </h3>
-  <p> Book name: <input type="text" placeholder="Name" ing-model="newBook.name"/> </p>
+  <p> Book name: <input type="text" placeholder="Name" ng-model="newBook.name"/> </p>
   <p> Shelf:
     <select ing-model="newBook.shelf">
       <option value=""> --select-- </option>
