@@ -7,16 +7,16 @@ lexer grammar xml;
 }
 
 fragment DIGIT: [0123456789];
-fragment ALPHA: [a-zA-Z];
-//fragment ALPHANUM: (DIGIT | ALPHA)+;
-fragment SPECIALCHAR: [-_~!$&'()*+,;=:];
+fragment LETTER: [a-zA-Z];
+//fragment ALPHANUM: (DIGIT | LETTER)+;
+fragment SPECIAL: [-_~!$&'()*+,;=:];
 
 
 //3.1
-fragment ELEMENTNAME: (('x' | 'X' 'm' | 'M' ((DIGIT | '_' | '-' | '.' | [a-kA-Km-zM-Z]) (DIGIT | '_' | '-' | '.' | ALPHA)*)? ) | (('x' | 'X') ((DIGIT | '_' | '-' | '.' | [a-lA-Ln-zN-Z]) (DIGIT | '_' | '-' | '.' | ALPHA)*)? ) | (([a-wA-Wy-zY-Z] | '_') (DIGIT | '_' | '-' | '.' | ALPHA)*));
+fragment ELEMENTNAME: (('x' | 'X' 'm' | 'M' ((DIGIT | '_' | '-' | '.' | [a-kA-Km-zM-Z]) (DIGIT | '_' | '-' | '.' | LETTER)*)? ) | (('x' | 'X') ((DIGIT | '_' | '-' | '.' | [a-lA-Ln-zN-Z]) (DIGIT | '_' | '-' | '.' | LETTER)*)? ) | (([a-wA-Wy-zY-Z] | '_') (DIGIT | '_' | '-' | '.' | LETTER)*));
 
 //3.2
-fragment LOCAL: (DIGIT | ALPHA | SPECIALCHAR) ((DIGIT | ALPHA | SPECIALCHAR) | '.' (DIGIT | ALPHA | SPECIALCHAR))*;
+fragment LOCAL: (DIGIT | LETTER | SPECIAL) ((DIGIT | LETTER | SPECIAL) | '.' (DIGIT | LETTER | SPECIAL))*;
 fragment DOMAIN: [0-9a-zA-Z.-]+;
 
 //3.3
@@ -82,7 +82,7 @@ CREDITCARD: {!tag && tagName.matches("(?i)creditcard")}? (VISA | MASTER | AMERIC
   System.out.println("Credit Card: " + getText());
 };
 
-OTHER: {!tag && !tagName.matches("(?i)email") && !tagName.matches("(?i)date") && !tagName.matches("(?i)phone") && !tagName.matches("(?i)creditcard")}? (DIGIT | ALPHA| SPECIALCHAR | ' ')+ {
+OTHER: {!tag && !tagName.matches("(?i)email") && !tagName.matches("(?i)date") && !tagName.matches("(?i)phone") && !tagName.matches("(?i)creditcard")}? (DIGIT | LETTER| SPECIAL | ' ')+ {
   tag = true;
   System.out.println("Other: " + "TAG: " + tagName + " " + getText());
 };

@@ -23,7 +23,7 @@ public class xml extends Lexer {
 	};
 
 	public static final String[] ruleNames = {
-		"DIGIT", "ALPHA", "SPECIALCHAR", "ELEMENTNAME", "LOCAL", "DOMAIN", "DATE", 
+		"DIGIT", "LETTER", "SPECIAL", "ELEMENTNAME", "LOCAL", "DOMAIN", "DATE", 
 		"MONTH", "YEAR", "THREEDIGIT", "FOURDIGIT", "VISA", "MASTER", "AMERICANEXP", 
 		"DINERSCLUB", "DISCOVER", "JCB", "STARTING", "STOPPING", "ELEMENTTAG", 
 		"EMAIL", "DATETEST", "PHONE", "CREDITCARD", "OTHER", "WS"
